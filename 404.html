@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ===== Variables & Reset ===== */
+        :root {
+            --bg-deep-black: #050505;
+            --gold-primary: #D4AF37;
+            --gold-text-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --silver-accent: #E0E0E0;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(20, 20, 20, 0.4);
+            --blur-strength: 30px;
+            --font-main: 'Rajdhani', sans-serif;
+            --font-display: 'Orbitron', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep-black);
+            color: var(--silver-accent);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== Background Animated Gradient ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(30, 30, 30, 0.5) 0%, transparent 70%);
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ===== Main Container ===== */
+        .error-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+            max-width: 600px;
+        }
+
+        /* ===== Logo ===== */
+        .error-logo {
+            width: 120px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* ===== 404 Number ===== */
+        .error-code {
+            font-family: var(--font-display);
+            font-size: 10rem;
+            font-weight: 900;
+            background: var(--gold-text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 30px rgba(184, 134, 11, 0.4));
+            line-height: 1;
+            margin-bottom: 10px;
+            letter-spacing: 10px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 20px rgba(184, 134, 11, 0.3));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 40px rgba(184, 134, 11, 0.6));
+            }
+        }
+
+        /* ===== Title ===== */
+        .error-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 25px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== Description ===== */
+        .error-description {
+            font-size: 1.1rem;
+            color: var(--silver-accent);
+            opacity: 0.85;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .text-gold {
+            background: var(--gold-text-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* ===== Glass Button ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: var(--gold-primary);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            backdrop-filter: blur(var(--blur-strength));
+            -webkit-backdrop-filter: blur(var(--blur-strength));
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4), 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-5px) scale(1.02);
+            color: #fff;
+        }
+
+        .back-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover svg {
+            transform: translateX(-5px);
+        }
+
+        /* ===== Decorative Elements ===== */
+        .speed-lines {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 200%;
+            background:
+                repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(212, 175, 55, 0.02) 100px,
+                    rgba(212, 175, 55, 0.02) 101px);
+            z-index: 0;
+            opacity: 0.5;
+            animation: speedMove 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes speedMove {
+            0% {
+                transform: translate(-50%, -50%) translateX(0);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) translateX(100px);
+            }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 6rem;
+                letter-spacing: 5px;
+            }
+
+            .error-title {
+                font-size: 1.1rem;
+                letter-spacing: 4px;
+            }
+
+            .error-description {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+
+            .back-btn {
+                padding: 15px 30px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+
+            .error-logo {
+                width: 90px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .error-code {
+                font-size: 4.5rem;
+            }
+
+            .error-title {
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Decorative Speed Lines -->
+    <div class="speed-lines"></div>
+
+    <!-- Main Content -->
+    <div class="error-container">
+        <!-- Logo -->
+        <img src="assets/lr-logo.jpg" alt="JVeloce Logo" class="error-logo">
+
+        <!-- 404 Code -->
+        <div class="error-code">404</div>
+
+        <!-- Title -->
+        <h1 class="error-title">Página no encontrada</h1>
+
+        <!-- Description -->
+        <p class="error-description">
+            Parece que esta ruta ha tomado un desvío inesperado.<br>
+            Vuelve al <span class="text-gold">inicio</span> y encuentra el vehículo de tus sueños.
+        </p>
+
+        <!-- Back Button -->
+        <a href="/" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Volver al Inicio
+        </a>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.log('[SW] Registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>

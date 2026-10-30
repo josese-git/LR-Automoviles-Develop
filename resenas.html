@@ -1,0 +1,740 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reseñas de Clientes | LR Automóviles en Valencia</title>
+    <meta name="description"
+        content="Lee las opiniones y reseñas 100% reales de nuestros clientes en LR Automóviles, tu concesionario de vehículos de ocasión en Valencia. ¡Descubre por qué confían en nosotros!">
+    <link rel="canonical" href="https://lr-automoviles.web.app/resenas.html">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
+    <!-- Open Graph / WhatsApp Meta Tags -->
+    <meta property="og:title" content="Reseñas - LR Automóviles">
+    <meta property="og:description" content="Descubre lo que opinan nuestros clientes sobre LR Automóviles.">
+    <meta property="og:image" content="https://lr-automoviles.web.app/assets/lr-logo.jpg">
+    <meta property="og:url" content="https://lr-automoviles.web.app/resenas.html">
+    <meta property="og:type" content="website">
+
+    <!-- Local Business (AutoDealer) Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoDealer",
+      "name": "LR Automóviles",
+      "image": "https://lr-automoviles.web.app/assets/lr-logo.jpg",
+      "@id": "https://lr-automoviles.web.app/",
+      "url": "https://lr-automoviles.web.app/",
+      "telephone": "+34633518574",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "C/ Acequia del primer brazo N° 15",
+        "addressLocality": "Massanasa",
+        "postalCode": "46470",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.412611, 
+        "longitude": -0.394167
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "20:00"
+      },
+      "priceRange": "€€"
+    }
+    </script>
+
+    <!-- Fonts: Rajdhani and Orbitron for that futuristic/sporty look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== RESEÑAS PAGE STYLES ===== */
+        .resenas-section {
+            padding: 140px 5% 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .resenas-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .resenas-header .section-title {
+            margin-bottom: 20px;
+        }
+
+        .resenas-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: var(--silver-accent);
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+
+        /* Google Rating Badge */
+        .google-rating-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .google-rating-badge:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .google-logo {
+            height: 30px;
+        }
+
+        .rating-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rating-stars-badge {
+            display: flex;
+            gap: 3px;
+        }
+
+        .rating-stars-badge .star {
+            color: #FBBC05;
+            font-size: 1.2rem;
+        }
+
+        .rating-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--silver-accent);
+        }
+
+        /* Grid de Reseñas */
+        #resenas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        /* Tarjeta de Reseña */
+        .resena-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resena-card::before {
+            content: '"';
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 5rem;
+            font-family: serif;
+            color: rgba(212, 175, 55, 0.1);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .resena-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .resena-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .resena-avatar,
+        .resena-avatar-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        .resena-avatar {
+            background: linear-gradient(135deg, var(--gold-primary), #B8860B);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #050505;
+            text-transform: uppercase;
+        }
+
+        .resena-avatar-img {
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .resena-info {
+            flex: 1;
+        }
+
+        .resena-nombre {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .resena-stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .resena-stars .star {
+            color: #FBBC05;
+            font-size: 1rem;
+        }
+
+        .resena-texto {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--silver-accent);
+            opacity: 0.9;
+            margin-bottom: 10px;
+            /* Truncar por defecto a 3 líneas */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .resena-texto.expanded {
+            display: block;
+            -webkit-line-clamp: unset;
+            overflow: visible;
+        }
+
+        .mostrar-mas-btn {
+            background: none;
+            border: none;
+            color: var(--gold-primary);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            display: none;
+            /* Oculto por defecto, se muestra con JS */
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mostrar-mas-btn.visible {
+            display: inline-flex;
+        }
+
+        .mostrar-mas-btn:hover {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .mostrar-mas-btn::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .mostrar-mas-btn.expanded::after {
+            transform: rotate(180deg);
+        }
+
+        /* Respuesta oculta por defecto */
+        .respuesta-propietario {
+            display: none;
+        }
+
+        .resena-card.expanded .respuesta-propietario {
+            display: block;
+        }
+
+        .resena-fecha {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.85rem;
+            color: var(--gold-primary);
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .resena-fecha::before {
+            content: '📅';
+            font-size: 0.9rem;
+        }
+
+        /* Respuesta del Propietario */
+        .respuesta-propietario {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(212, 175, 55, 0.08);
+            border-left: 3px solid var(--gold-primary);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .respuesta-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .respuesta-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 4px;
+        }
+
+        .respuesta-nombre {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .respuesta-texto {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--silver-accent);
+            opacity: 0.85;
+            font-style: italic;
+        }
+
+        /* Loading State */
+        .resenas-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 100px 0;
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+
+        .spinner-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(212, 175, 55, 0.15);
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+            box-shadow:
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.1),
+                inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Error State */
+        .resenas-error {
+            text-align: center;
+            padding: 60px;
+            grid-column: 1 / -1;
+        }
+
+        .resenas-error p {
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--silver-accent);
+            font-size: 1.1rem;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .resenas-section {
+                padding: 120px 4% 60px;
+            }
+
+            #resenas-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .resena-card {
+                padding: 25px;
+            }
+
+            .google-rating-badge {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .resenas-header .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background & Effects -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <!-- Hamburger Menu for Mobile -->
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="assets/lr-logo.jpg" alt="LR Automóviles Logo" class="nav-logo">
+                </a>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html#home">Inicio</a></li>
+                <li><a href="index.html#inventory">Coches</a></li>
+                <li><a href="resenas.html" class="active">Reseñas</a></li>
+                <li><a href="index.html#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Reseñas Section -->
+    <section class="resenas-section">
+        <div class="resenas-header">
+            <h1 class="section-title">OPINIONES DE <span class="text-stroke">CLIENTES</span></h1>
+            <p class="resenas-subtitle">Descubre lo que dicen nuestros clientes sobre su experiencia con LR Automóviles</p>
+
+            <!-- Google Rating Badge -->
+            <a href="https://share.google/QLgMCOl6Wto87cDgW" target="_blank" rel="noopener noreferrer"
+                class="google-rating-badge">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+                    class="google-logo">
+                <div class="rating-info">
+                    <div class="rating-stars-badge">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                    </div>
+                    <span class="rating-text">5.0</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Container para las reseñas -->
+        <div id="resenas-container">
+            <!-- Loading Spinner -->
+            <div class="resenas-loader" id="resenasLoader">
+                <div class="spinner-ring"></div>
+                <span class="loader-text">Cargando Reseñas...</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/lr-logo.jpg" alt="LR Automóviles" class="contact-glow-img">
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61554233211583" class="social-btn glass-btn"
+                    aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.milanuncios.com/anuncios-usuario/julio-90742085.htm?stc=oth-share_link-send_friend-profile"
+                    class="social-btn glass-btn" aria-label="Milanuncios" target="_blank" rel="noopener noreferrer"
+                    title="Milanuncios">
+                    <img src="https://www.milanuncios.com/prensa//wp-content/uploads/2020/11/M-Icon-Round.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.instagram.com/"  class="social-btn glass-btn"
+                    aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="" role="presentation">
+                </a>
+
+                <a href="https://wa.me/34633518574" class="social-btn glass-btn" aria-label="Whatsapp" target="_blank"
+                    rel="noopener noreferrer" title="WhatsApp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="" role="presentation">
+                </a>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="legal-links">
+                <a href="aviso-legal.html" class="legal-link">Aviso Legal</a> |
+                <a href="politica-privacidad.html" class="legal-link">Política de Privacidad</a>
+            </div>
+
+            <p class="copyright">© 2026 LR Automóviles. Vehículos de Ocasión.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/background-animation.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Cargar Reseñas -->
+    <script>
+        /**
+         * Carga las reseñas desde el archivo JSON y las renderiza en el contenedor
+         */
+        async function cargarResenas() {
+            const container = document.getElementById('resenas-container');
+            const loader = document.getElementById('resenasLoader');
+
+            try {
+                // Fetch al archivo JSON
+                const response = await fetch('google.json');
+
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo de reseñas');
+                }
+
+                const resenas = await response.json();
+
+                // Filtrar reseñas que tienen texto (Contenido de la Reseña no vacío ni null)
+                const resenasValidas = resenas.filter(review => {
+                    const texto = review["Contenido de la Reseña"];
+                    return texto && texto.trim() !== '';
+                });
+
+                // Ocultar loader
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+
+                // Si no hay reseñas válidas
+                if (resenasValidas.length === 0) {
+                    container.innerHTML = `
+                        <div class="resenas-error">
+                            <p>No hay reseñas disponibles en este momento.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Generar HTML para cada reseña
+                let html = '';
+                resenasValidas.forEach(review => {
+                    const nombre = review["Nombre del Reseñador"] || 'Cliente';
+                    const texto = review["Contenido de la Reseña"];
+                    const fecha = review["Fecha de la Reseña"] || '';
+                    const foto = review["Foto de perfil del reseñador"] || '';
+                    const rating = parseInt(review["Calificación (Max 5)"]) || 5;
+                    const respuesta = review["Respuesta del Propietario"] || '';
+
+                    // Obtener inicial para fallback del avatar
+                    const inicial = nombre.charAt(0).toUpperCase();
+
+                    // Generar estrellas según el rating
+                    const estrellas = '★'.repeat(rating);
+
+                    // Avatar: foto si existe, sino inicial
+                    const avatarHtml = foto
+                        ? `<img src="${escapeHtml(foto)}" alt="${escapeHtml(nombre)}" class="resena-avatar-img" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                           <div class="resena-avatar" style="display:none;">${inicial}</div>`
+                        : `<div class="resena-avatar">${inicial}</div>`;
+
+                    // Respuesta del propietario si existe
+                    const respuestaHtml = respuesta && respuesta.trim() !== ''
+                        ? `<div class="respuesta-propietario">
+                               <div class="respuesta-header">
+                                   <img src="assets/lr-logo.jpg" alt="LR Automóviles" class="respuesta-avatar">
+                                   <span class="respuesta-nombre">LR Automóviles (propietario)</span>
+                               </div>
+                               <p class="respuesta-texto">"${escapeHtml(respuesta)}"</p>
+                           </div>`
+                        : '';
+
+                    // Siempre incluir el botón, se mostrará solo si el texto está truncado
+                    html += `
+                        <article class="resena-card">
+                            <div class="resena-header">
+                                ${avatarHtml}
+                                <div class="resena-info">
+                                    <h3 class="resena-nombre">${escapeHtml(nombre)}</h3>
+                                    <div class="resena-stars">
+                                        ${estrellas.split('').map(s => `<span class="star">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="resena-texto">${escapeHtml(texto)}</p>
+                            <button class="mostrar-mas-btn" onclick="toggleTexto(this)">Mostrar más</button>
+                            ${fecha ? `<span class="resena-fecha">${escapeHtml(fecha)}</span>` : ''}
+                            ${respuestaHtml}
+                        </article>
+                    `;
+                });
+
+                container.innerHTML = html;
+
+                // Después de renderizar, detectar qué textos están realmente truncados
+                detectarTextosTruncados();
+
+            } catch (error) {
+                console.error('Error cargando reseñas:', error);
+
+                // Ocultar loader y mostrar error
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+
+                container.innerHTML = `
+                    <div class="resenas-error">
+                        <p>Error al cargar las reseñas. Por favor, inténtalo de nuevo más tarde.</p>
+                    </div>
+                `;
+            }
+        }
+
+        /**
+         * Escapa caracteres HTML para prevenir XSS
+         */
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        /**
+         * Detecta qué textos están realmente truncados y muestra su botón
+         */
+        function detectarTextosTruncados() {
+            const textos = document.querySelectorAll('.resena-texto');
+            textos.forEach(texto => {
+                const btn = texto.nextElementSibling;
+                // Comprobar si el texto está realmente truncado (scrollHeight > clientHeight)
+                // o si tiene respuesta del propietario
+                const card = texto.closest('.resena-card');
+                const tieneRespuesta = card.querySelector('.respuesta-propietario') !== null;
+                const estaTruncado = texto.scrollHeight > texto.clientHeight;
+
+                if (estaTruncado || tieneRespuesta) {
+                    btn.classList.add('visible');
+                }
+            });
+        }
+
+        /**
+         * Toggle para expandir/colapsar texto largo de reseñas
+         */
+        function toggleTexto(btn) {
+            const card = btn.closest('.resena-card');
+            const textoElement = card.querySelector('.resena-texto');
+            const isExpanded = card.classList.contains('expanded');
+
+            if (isExpanded) {
+                card.classList.remove('expanded');
+                textoElement.classList.remove('expanded');
+                btn.textContent = 'Mostrar más';
+                btn.classList.remove('expanded');
+            } else {
+                card.classList.add('expanded');
+                textoElement.classList.add('expanded');
+                btn.textContent = 'Mostrar menos';
+                btn.classList.add('expanded');
+            }
+        }
+
+        // Ejecutar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', cargarResenas);
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.log('[SW] Registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
+

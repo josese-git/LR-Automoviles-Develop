@@ -1,0 +1,408 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Tags to be dynamically injected for Googlebot -->
+    <script>
+        (function () {
+            // Early SEO optimization: Generate unique title and canonical URL synchronously
+            const urlParams = new URLSearchParams(window.location.search);
+            const vehicleId = urlParams.get('id');
+
+            if (vehicleId) {
+                // Attempt to parse name from ID (e.g., nissan-juke-2017 -> Nissan Juke 2017)
+                let carName = vehicleId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                // Remove numeric IDs at end if it looks like a timestamp/random string
+                carName = carName.replace(/\s\d{10,}$/, '');
+
+                const canonicalUrl = `https://lr-automoviles.web.app/Coches/detalle.html?id=${vehicleId}`;
+
+                // Write Title
+                document.write(`<title>${carName} | LR Automóviles Jaén</title>`);
+
+                // Write Canonical
+                document.write(`<link rel="canonical" id="canonical-url" href="${canonicalUrl}">`);
+
+                // Write standard Meta Description
+                document.write(`<meta name="description" content="Descubre todos los detalles, fotos y equipamiento del ${carName} de segunda mano en LR Automóviles, tu concesionario de confianza en Jaén.">`);
+
+                // Write Open Graph
+                document.write(`<meta property="og:title" content="${carName} | LR Automóviles Jaén">`);
+                document.write(`<meta property="og:description" content="Descubre los detalles del ${carName} en LR Automóviles.">`);
+                document.write(`<meta property="og:url" content="${canonicalUrl}">`);
+                document.write('<meta id="og-image-default" property="og:image" content="https://lr-automoviles.web.app/assets/logo%20con%20fondo.png">');
+                document.write('<meta property="og:type" content="article">');
+            } else {
+                // Default fallback
+                document.write('<title>Coches de Ocasión | LR Automóviles Jaén</title>');
+                document.write('<link rel="canonical" id="canonical-url" href="https://lr-automoviles.web.app/Coches/detalle.html">');
+                document.write('<meta name="description" content="Descubre los detalles de este coche de segunda mano y ocasión en LR Automóviles, tu concesionario de compra-venta en Jaén.">');
+                document.write('<meta property="og:title" content="Coches de Ocasión | LR Automóviles Jaén">');
+                document.write('<meta property="og:description" content="Descubre los detalles de este vehículo exclusivo en LR Automóviles.">');
+                document.write('<meta id="og-image-default" property="og:image" content="https://lr-automoviles.web.app/assets/logo%20con%20fondo.png">');
+                document.write('<meta property="og:type" content="website">');
+            }
+        })();
+    </script>
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Dynamic JSON-LD will be injected by detalle.js on load -->
+
+    <!-- Loading Spinner Styles -->
+    <style>
+        .hero-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 60px;
+        }
+
+        .spinner-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(212, 175, 55, 0.15);
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+            box-shadow:
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.1),
+                inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .hero-loader.hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background & Effects -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="logo-container">
+                <a href="../index.html">
+                    <img src="../assets/lr-logo.jpg" alt="LR Automóviles Logo" class="nav-logo">
+                </a>
+            </div>
+
+            <div class="mobile-search-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E0E0E0" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Inicio</a></li>
+                <li><a href="../index.html#inventory">Coches</a></li>
+                <li><a href="../resenas.html">Reseñas</a></li>
+                <li><a href="../index.html#contact">Contacto</a></li>
+                <li><a href="#" class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="search-modal">
+        <div class="search-modal-content glass-panel">
+            <button class="search-close-btn" id="searchCloseBtn" aria-label="Cerrar búsqueda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="search-header">
+                <svg class="search-icon-lg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar vehículo..."
+                    autocomplete="off">
+            </div>
+            <div id="searchResults" class="search-results">
+                <p class="search-hint">Escribe para buscar por marca, modelo, año...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section (Split Screen) -->
+    <section class="car-detail-hero">
+        <div class="hero-split-container">
+            <!-- Left Column: Visual -->
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <!-- Loading Spinner -->
+                    <div id="heroLoader" class="hero-loader">
+                        <div class="spinner-ring"></div>
+                        <span class="loader-text" id="loaderText">Cargando...</span>
+                    </div>
+                    <img id="heroCarImg" src="" alt="" class="hero-car-img" style="display:none;">
+                </div>
+                <div class="hero-price-tag" id="heroPrice">
+                    <span class="text-gold">€</span><span class="text-gold">Cargando...</span>
+                </div>
+            </div>
+
+            <!-- Right Column: Data -->
+            <div class="hero-data">
+                <h1 class="car-title"><span id="carBrand">Vehículo</span><br><span class="text-gold"
+                        id="carModel"></span></h1>
+                <div class="car-description">
+                    <p id="carDescription">Cargando información del vehículo...</p>
+                </div>
+
+                <!-- Car Specs Grid (New) -->
+                <div class="car-specs-grid">
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Kilometraje.png" alt="" role="presentation" class="spec-icon">
+                        <span id="specKm">--</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Combustible.png" alt="" role="presentation" class="spec-icon">
+                        <span id="specFuel">--</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Cilindrada.png" alt="" role="presentation" class="spec-icon">
+                        <span id="specCV">--</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Transmisión.png" alt="" role="presentation" class="spec-icon">
+                        <span id="specTransmission">--</span>
+                    </div>
+                </div>
+
+                <div class="cta-container" data-nosnippet>
+                    <p class="cta-text">
+                        Para más información <span class="text-gold">llamar al 603945181</span>.<br>
+                        Precio incluye cambio de nombre.<br>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">El anuncio puede contener errores, no supone
+                            condiciones contractuales.</span>
+                    </p>
+                    <div style="display: flex; gap: 15px; align-items: center; justify-content: center; width: 100%; max-width: 400px;">
+                        <a href="tel:+34603945181" class="glass-btn action-btn" style="flex: 1; text-align: center;">LLAMAR AHORA</a>
+                        <button id="shareVehicleBtn" class="glass-btn action-btn" style="padding: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; border-radius: 50%; width: 56px; height: 56px;" aria-label="Compartir vehículo" title="Compartir vehículo">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="18" cy="5" r="3"></circle>
+                                <circle cx="6" cy="12" r="3"></circle>
+                                <circle cx="18" cy="19" r="3"></circle>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Dynamic) -->
+    <h1 id="galleryTitle" class="car-title" style="text-align: center;">
+        <span class="text-gold">Galería</span>
+    </h1>
+
+    <!-- Dynamic Gallery Container -->
+    <div id="galleryContainer">
+        <!-- Gallery images will be injected here by detalle.js -->
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/icons/lr-logo.jpg" alt="" role="presentation" class="contact-glow-img">
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61554233211583" class="social-btn glass-btn"
+                    aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.milanuncios.com/anuncios-usuario/julio-90742085.htm?stc=oth-share_link-send_friend-profile"
+                    class="social-btn glass-btn" aria-label="Milanuncios" target="_blank" rel="noopener noreferrer"
+                    title="Milanuncios">
+                    <img src="https://www.milanuncios.com/prensa//wp-content/uploads/2020/11/M-Icon-Round.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.instagram.com/jveloce_autos?igsh=MXJrYWhub3BpczhvMg==" class="social-btn glass-btn"
+                    aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="" role="presentation">
+                </a>
+
+                <a href="https://wa.me/34633518574" class="social-btn glass-btn" aria-label="Whatsapp" target="_blank"
+                    rel="noopener noreferrer" title="WhatsApp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="" role="presentation">
+                </a>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="legal-links">
+                <a href="../aviso-legal.html" class="legal-link">Aviso Legal</a> |
+                <a href="../politica-privacidad.html" class="legal-link">Política de Privacidad</a>
+            </div>
+
+            <p class="copyright">© 2026 LR Automóviles. Future Ready.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Container -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <button class="lightbox-prev">&#10094;</button>
+        <button class="lightbox-next">&#10095;</button>
+        <span class="lightbox-counter">1 / 1</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full Detail">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/background-animation.js"></script>
+    <script src="../js/lightbox.js"></script>
+    <script type="module" src="../js/detalle.js"></script>
+    <script type="module" src="../js/store.js"></script>
+    <script type="module" src="../js/search.js"></script>
+    <script>
+        // Simple script for mobile menu toggle (copied logic from app.js roughly)
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('toggle');
+            navLinks.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+
+        // Set loader text uniquely based on URL for SEO text differentiation
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const vehicleId = urlParams.get('id');
+            const loaderTextEl = document.getElementById('loaderText');
+            const carBrandEl = document.getElementById('carBrand');
+
+            if (vehicleId) {
+                let carName = vehicleId.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+                carName = carName.replace(/\s\d{10,}$/, ''); // Remove long trailing numbers
+                if (loaderTextEl) loaderTextEl.textContent = `Cargando ${carName}...`;
+                if (carBrandEl) carBrandEl.textContent = carName;
+            }
+        })();
+    </script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.log('[SW] Registration failed:', err));
+            });
+        }
+    </script>
+
+    <!-- Share Button Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const shareBtn = document.getElementById('shareVehicleBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', async () => {
+                    const carBrand = document.getElementById('carBrand')?.textContent || '';
+                    const carModel = document.getElementById('carModel')?.textContent || '';
+                    const carName = `${carBrand} ${carModel}`.trim() || document.title;
+                    const pageUrl = window.location.href;
+                    
+                    if (navigator.share) {
+                        try {
+                            await navigator.share({
+                                title: carName,
+                                text: `¡Mira este vehículo que he encontrado en LR Automóviles! ${carName}`,
+                                url: pageUrl
+                            });
+                            console.log('Vehículo compartido con éxito');
+                        } catch (err) {
+                            console.log('Operación de compartir cancelada o fallida:', err);
+                        }
+                    } else {
+                        // Fallback if Web Share API is not supported
+                        navigator.clipboard.writeText(pageUrl).then(() => {
+                            alert('Enlace copiado al portapapeles: ' + pageUrl);
+                        }).catch(err => {
+                            console.error('Error al copiar el enlace:', err);
+                            alert('No se pudo copiar el enlace. La URL es: ' + pageUrl);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

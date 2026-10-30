@@ -1,0 +1,1879 @@
+/* 
+   Autos JVeloce - iOS 26 / Liquid Glass Theme 
+   Futuristic UI/UX Design
+*/
+
+:root {
+    /* Color Palette */
+    --bg-deep-black: #050505;
+    --gold-primary: #D4AF37;
+    --gold-gradient: linear-gradient(135deg, #FGD700 0%, #D4AF37 50%, #B8860B 100%);
+    --gold-text-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    --silver-accent: #E0E0E0;
+    --red-neon: #FF3333;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --glass-highlight: rgba(255, 255, 255, 0.05);
+
+    /* Effects */
+    --blur-strength: 30px;
+    --glow-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+
+    /* Typography */
+    --font-main: 'Rajdhani', sans-serif;
+    --font-display: 'Orbitron', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-deep-black);
+    color: var(--silver-accent);
+    font-family: var(--font-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* --- Background & Atmosphere --- */
+/* Rendered via Canvas (js/background-animation.js) */
+
+.cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    /* Was 9999. Moved behind cards (which will rely on higher z-index) for better glass effect */
+    mix-blend-mode: screen;
+    opacity: 0.6;
+}
+
+/* --- Glassmorphism Utilities --- */
+.glass-nav,
+.glass-panel,
+.glass-footer,
+.glass-btn {
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- Navigation --- */
+.glass-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    height: 80px;
+    border-radius: 40px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 40px;
+}
+
+.nav-logo {
+    height: 50px;
+    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+/* Default: Hide hamburger & mobile search on desktop */
+.hamburger,
+.mobile-search-btn {
+    display: none;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--silver-accent);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--gold-primary);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    min-height: 70vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 30px;
+    text-align: center;
+    overflow: hidden;
+    /* Prevent internal scroll from pseudo-elements */
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.text-gold {
+    background: var(--gold-text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(184, 134, 11, 0.3));
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+    color: white;
+    opacity: 0.8;
+    margin-bottom: 30px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Hero Description Box - Clean Text with Breathing Glow */
+.hero-description-box {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 30px;
+}
+
+.hero-description-box p {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.8;
+    color: var(--silver-accent);
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin: 0;
+    /* Static glow - no animation on this element */
+    text-shadow:
+        0 0 20px rgba(212, 175, 55, 0.4),
+        0 0 40px rgba(212, 175, 55, 0.25),
+        0 0 60px rgba(212, 175, 55, 0.15);
+}
+
+/* Pseudo-element for breathing glow - GPU accelerated via opacity */
+.hero-description-box {
+    position: relative;
+}
+
+.hero-description-box::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: glow-breathe 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes glow-breathe {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.hero-3d-element {
+    perspective: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.floating-car-container {
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-emblem {
+    width: 400px;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
+    transition: transform 0.1s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px) rotateX(5deg);
+    }
+
+    50% {
+        transform: translateY(-20px) rotateX(0deg);
+    }
+}
+
+/* --- Inventory Grid --- */
+.inventory-section {
+    padding: 40px 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 80px;
+    color: white;
+}
+
+.text-stroke {
+    -webkit-text-stroke: 1px var(--gold-primary);
+    color: transparent;
+    font-weight: 100;
+}
+
+.car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.car-card {
+    /* define border-radius but remove visible background/border to make car "float" */
+    border-radius: 24px;
+    padding: 10px;
+    /* Reduced padding to allow image to be bigger */
+    position: relative;
+    overflow: visible;
+    /* Allow image to pop out if needed */
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+    /* Ensure it sits above the cursor glow */
+
+    /* Overriding glass-panel for a cleaner look as requested */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.car-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    /* No box shadow on the card itself, maybe just the car later */
+}
+
+.card-image-wrapper {
+    height: 300px;
+    /* Increased height space */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    margin-top: -20px;
+}
+
+.car-image {
+    width: 110%;
+    /* Reduced from 130% to prevent overlap */
+    max-width: none;
+    /* Allow overflow */
+    object-fit: contain;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+    /* Enhanced drop shadow for "car border" feel */
+}
+
+.car-card:hover .car-image {
+    transform: scale(1.075);
+    /* Reduced zoom by half as requested */
+}
+
+/* Floating Brand Logo */
+/* Floating Brand Logo */
+.brand-logo-floating {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: -40px auto 10px auto;
+    filter: drop-shadow(0 5px 15px rgba(255, 255, 255, 0.2));
+    transition: transform 0.3s;
+    position: relative;
+    z-index: 10;
+}
+
+/* Wide variant for horizontal logos (like new Kia) */
+.brand-logo-floating.wide {
+    width: 200px;
+    /* Adjusted slightly from 240px to fit better */
+    height: 100px;
+    margin: -50px auto -20px auto;
+    /* Pull UP to sit on border, reclaiming label space */
+}
+
+.car-card:hover .brand-logo-floating {
+    transform: scale(1.1);
+}
+
+.car-specs {
+    display: flex;
+    gap: 15px;
+    font-size: 0.8rem;
+    color: var(--gold-primary);
+    /* Gold accent for specs */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* Label / Rótulo Styling - Modern Glass Pill */
+.card-details {
+    position: relative;
+    z-index: 2;
+    /* Modern Glass Effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 20px 30px 15px 30px;
+    border-radius: 60px;
+    /* Strong Pill Shape */
+    margin-top: -35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.3s ease;
+}
+
+.car-card:hover .card-details {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--gold-primary);
+    /* Gold border on hover */
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.car-model {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: #fff;
+    /* White text for contrast on glass */
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Sold State */
+.sold .sold-overlay-glass {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.sold-badge-img {
+    width: 80%;
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+    animation: pulse-gold 3s infinite ease-in-out;
+}
+
+@keyframes pulse-gold {
+
+    0%,
+    100% {
+        transform: rotate(-10deg) scale(1);
+        filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+    }
+
+    50% {
+        transform: rotate(-10deg) scale(1.05);
+        filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+    }
+}
+
+/* --- Footer --- */
+.glass-footer {
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-logo img {
+    height: 120px;
+    /* Increased size for contact logo */
+    margin-bottom: 30px;
+    transition: all 0.5s ease;
+}
+
+.contact-glow-img {
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+}
+
+.contact-glow-img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+}
+
+.social-links {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.social-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Bouncy spring effect */
+    background: rgba(255, 255, 255, 0.05);
+    /* Subtle glass bg */
+    overflow: hidden;
+    /* Clip image to circle */
+    padding: 10px;
+    /* Padding for the icon inside */
+}
+
+.social-btn img {
+    width: 100%;
+    height: 100%;
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.social-btn:hover {
+    background: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6), inset 0 0 10px rgba(212, 175, 55, 0.2);
+    transform: translateY(-8px) scale(1.1);
+    border-color: var(--gold-primary);
+}
+
+.legal-links {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.legal-link {
+    color: var(--silver-accent);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.legal-link:hover {
+    color: var(--gold-primary);
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+/* Responsiveness */
+/* Responsiveness */
+@media (max-width: 768px) {
+
+    /* 1. Reset Nav Position (Top 0, Full Width) */
+    .glass-nav {
+        top: 0;
+        bottom: auto;
+        height: 70px;
+        padding: 0 20px;
+        width: 100%;
+        /* Full Width */
+        max-width: none;
+        border-radius: 0 0 20px 20px;
+        /* Rounded only at bottom */
+
+        /* FIX: Reset transform to ensure fixed children behave correctly */
+        left: 0;
+        transform: none;
+    }
+
+    .nav-content {
+        padding: 0;
+        justify-content: space-between;
+        position: relative;
+        /* For absolute centering */
+    }
+
+    /* 2. Hamburger */
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        z-index: 101;
+    }
+
+    /* 2.5 Mobile Search Button */
+    .mobile-search-btn {
+        display: block;
+        z-index: 101;
+    }
+
+    /* 2.6 Absolute Centered Logo */
+    .logo-container {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 101;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+        background-color: var(--silver-accent);
+        transition: all 0.3s ease;
+    }
+
+    /* Hamburger Toggle Animation */
+    .hamburger.toggle span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .hamburger.toggle span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.toggle span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* Mobile Menu Overlay - Liquid Glass Style (OPTIMIZED) */
+    .nav-links {
+        position: fixed;
+        /* Darker background to compensate for reduced blur */
+        background: rgba(8, 8, 8, 0.85);
+
+        /* OPTIMIZED: Reduced blur from 40px to 15px for better mobile performance */
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
+        /* Subtle glass border */
+        border-right: 1px solid rgba(255, 255, 255, 0.12);
+        border-left: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.03),
+            0 10px 40px rgba(0, 0, 0, 0.6);
+
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        /* OPTIMIZED: Use opacity + visibility for smoother animation instead of transform */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-30px);
+
+        /* OPTIMIZED: Faster, simpler transition */
+        transition: opacity 0.25s ease-out,
+            visibility 0.25s ease-out,
+            transform 0.25s ease-out;
+
+        z-index: 99;
+        margin: 0;
+        padding: 0;
+
+        /* PERFORMANCE: GPU layer promotion */
+        will-change: opacity, transform;
+        contain: layout style;
+    }
+
+    .nav-links.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nav-links li {
+        display: block !important;
+        /* Force show all links */
+        margin: 25px 0;
+        /* More spacing */
+    }
+
+    .nav-links a {
+        font-size: 1.8rem;
+        font-weight: 300;
+        position: relative;
+        padding: 10px 30px;
+        border-radius: 50px;
+        /* OPTIMIZED: Specific transitions instead of 'all' for better performance */
+        transition: color 0.2s ease,
+            background-color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease;
+        letter-spacing: 4px;
+        border: 1px solid transparent;
+    }
+
+    /* Gold highlight for Active Link */
+    .nav-links a.active {
+        color: var(--gold-primary);
+        font-weight: 600;
+        text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    /* Animated Glow for Inactive/Hover Links (White) */
+    .nav-links a:not(.active) {
+        color: rgba(255, 255, 255, 0.6);
+        /* Slightly dimmed by default */
+    }
+
+    .nav-links a:not(.active):active,
+    .nav-links a:not(.active):hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        transform: scale(1.03);
+    }
+
+    /* --- Page Dim + Blur Effect (OPTIMIZED) --- */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.4);
+        /* Blur applied to this single layer instead of all elements - MUCH more efficient */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 98;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+        /* GPU optimization */
+        will-change: opacity;
+    }
+
+    body.menu-open::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    body.menu-open .glass-nav {
+        z-index: 1000;
+    }
+
+    /* Disable pointer events on background content when menu is open */
+    body.menu-open>*:not(.glass-nav):not(script) {
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* Hide Search Icon in Mobile Menu (User Request) */
+    .nav-links .search-icon {
+        display: none !important;
+    }
+
+    /* Keep Search Icon Visible: No, hidden on mobile per request */
+
+    /* 3. Text Sizing */
+    .hero-title {
+        font-size: 2.8rem;
+        /* Smaller title to prevent overflow */
+    }
+
+    .hero-section {
+        padding-top: 100px;
+        min-height: 60vh;
+    }
+
+    /* --- MOBILE PERFORMANCE: Hero Text Optimizations --- */
+    /* Reduce costly text-shadow layers but keep visible glow */
+    .hero-description-box p {
+        text-shadow:
+            0 0 20px rgba(212, 175, 55, 0.5),
+            0 0 40px rgba(212, 175, 55, 0.2);
+        /* 2 layers instead of 3, but more visible */
+    }
+
+    /* Disable breathing glow animation on mobile - static glow is fine */
+    .hero-description-box::before {
+        animation: none;
+        opacity: 0.7;
+        /* Higher static opacity for more visible glow */
+        transform: scale(1.05);
+    }
+
+    /* Keep text-gold filter but lighter */
+    .text-gold {
+        filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.25));
+        /* Lighter shadow, still visible */
+    }
+
+    /* Simplify hero subtitle shadow */
+    .hero-subtitle {
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* 4. Fix Hover Scaling on Mobile (Touch Devices) */
+@media (hover: none) {
+    .car-card:hover .car-image {
+        transform: none;
+        /* Disable zoom on touch */
+    }
+
+    .car-card:active .car-image {
+        transform: scale(1.05);
+        /* Slight feedback on tap only */
+    }
+
+    .car-card:hover .brand-logo-floating,
+    .car-card:hover .card-details {
+        transform: none;
+        background: rgba(255, 255, 255, 0.1);
+        /* Keep default background */
+    }
+}
+
+/* 5. Prevent Horizontal Scroll */
+body,
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.hero-section,
+.inventory-section {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Sold State Effect */
+.card-image-wrapper {
+    position: relative;
+    /* Anchor for absolute overlay */
+}
+
+.car-card.sold .car-image {
+    /* Use !important to override tilt or other inline styles if necessary */
+    filter: sepia(1) saturate(1.5) hue-rotate(10deg) brightness(0.7) contrast(1.2) !important;
+    transition: filter 0.5s ease, transform 0.4s ease;
+}
+
+.sold-overlay-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+    width: 90%;
+    max-width: 350px;
+    /* Prevent it from being colossal on big screens */
+    z-index: 20;
+    pointer-events: none;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.9));
+    animation: stamp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes stamp {
+    0% {
+        transform: translate(-50%, -50%) scale(2) rotate(0deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
+        opacity: 1;
+    }
+}
+
+/* --- Car Detail Page Styles --- */
+
+/* Hero Split Screen */
+.car-detail-hero {
+    min-height: 100vh;
+    padding: 0px 5% 50px 5%;
+    /* Reduced back to 40px to remove gap */
+    display: flex;
+    align-items: flex-start;
+    /* Aligns content to top, removing extra space */
+    justify-content: center;
+    position: relative;
+}
+
+.hero-split-container {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    max-width: 1600px;
+    width: 100%;
+    align-items: center;
+}
+
+/* Left Column: Visual */
+.hero-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-image-container {
+    width: 100%;
+    /* Reduced from 110% */
+    max-width: 750px;
+    /* Reduced from 900px */
+    position: relative;
+    z-index: 2;
+    margin-left: 0;
+    /* Centered */
+    /* Base filter replaced by animation */
+    animation: hero-glow-float 6s ease-in-out infinite;
+}
+
+@keyframes hero-glow-float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 5px rgba(212, 175, 55, 0));
+        /* Faint glow */
+    }
+
+    50% {
+        transform: translateY(-20px);
+        filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
+        /* Strong gold glow at peak */
+    }
+}
+
+.hero-car-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transform: scale(1.0);
+    /* Removed extra zoom */
+}
+
+.hero-price-tag {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--gold-primary);
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    margin-top: 40px;
+    /* Increased margin */
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 40px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    z-index: 10;
+}
+
+.currency {
+    font-size: 0.6em;
+    vertical-align: top;
+    margin-right: 5px;
+}
+
+@keyframes float-hero {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Right Column: Data */
+.hero-data {
+    text-align: center;
+    /* Changed from right to center */
+    color: var(--silver-accent);
+}
+
+.car-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 30px;
+}
+
+.car-description p {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    /* Increased from 1.05rem */
+    line-height: 1.6;
+    color: #ffffff;
+    /* Pure white */
+    font-weight: 700;
+    /* Bold */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    /* Added shadow for readability */
+}
+
+.cta-container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centered */
+    gap: 20px;
+}
+
+/* --- New Specs Grid Styles --- */
+.car-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 25px auto;
+    /* Centered with vertical spacing */
+    width: 100%;
+    max-width: 600px;
+    /* Constrain width so it's not "giant" */
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    /* Reduced padding */
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-align: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    /* Very subtle initial glass */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.spec-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    border-color: var(--gold-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.spec-icon {
+    width: 28px;
+    /* Smaller icon */
+    height: 28px;
+    stroke: var(--gold-primary);
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+}
+
+.spec-item span {
+    font-family: var(--font-main);
+    font-size: 0.85rem;
+    /* Smaller text */
+    color: #e0e0e0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.cta-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.action-btn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: white;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(0, 0, 0, 0));
+    border: 1px solid var(--gold-primary);
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: var(--gold-primary);
+    color: black;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+}
+
+/* Gallery Section */
+.gallery-section {
+    padding: 50px 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.gallery-block {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    /* FIX: Ensure container constrains image height */
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    /* Ensure img fills it properly */
+    cursor: pointer;
+    /* Interaction cursor */
+}
+
+.gallery-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: block;
+}
+
+/* ... hover styles ... */
+.gallery-item:hover {
+    border-color: var(--gold-primary);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    transform: scale(1.02);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Main Gallery Block Wrapper */
+.gallery-block {
+    margin-bottom: 20px;
+    /* Ensures gap between the stacked blocks (A, B, C...) */
+    width: 100%;
+}
+
+/* Block A: Asymmetric (Left stack, Right main) */
+.block-a {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    height: auto;
+    /* Remove fixed height, let content drive it */
+    overflow: hidden;
+}
+
+/* Use Flexbox for cleaner vertical stacking */
+.col-left-stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 100%;
+    overflow: hidden;
+    /* Contain content */
+}
+
+.col-left-stacked .gallery-item {
+    flex: 1;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    /* Adjusted to be narrower vertically as requested */
+}
+
+.col-right-main {
+    height: 100%;
+    overflow: hidden;
+}
+
+.col-right-main .gallery-item {
+    height: 100%;
+    width: 100%;
+}
+
+/* Block B: Twin Panoramas */
+.block-b {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: auto;
+    /* Let aspect ratio drive height if needed, or keep fixed */
+    /* Kept 16:9 implicit or fixed height as user said they were fine */
+    /* If user said strict 16:9, we could add aspect-ratio: 16/9 here too */
+}
+
+.block-b .gallery-item {
+    aspect-ratio: 16 / 9;
+}
+
+/* Block C: Triple Details */
+.block-c {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    height: auto;
+    /* Remove fixed height */
+}
+
+.block-c .gallery-item {
+    aspect-ratio: 9 / 16;
+    /* 9:16 Aspect Ratio requested */
+}
+
+/* Block D: 3x2 Grid */
+.block-d {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Removed grid-template-rows */
+    gap: 20px;
+}
+
+.block-d .gallery-item {
+    aspect-ratio: 9 / 16;
+    /* 9:16 Aspect Ratio requested */
+}
+
+/* Block E: Final Center */
+.block-e {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.block-e .gallery-item {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    /* Assume standard ratio for final image */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .hero-split-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-data {
+        text-align: center;
+        padding: 0 20px;
+    }
+
+    .cta-container {
+        align-items: center;
+    }
+
+    .hero-image-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Gallery Stacking for Tablet */
+    .block-a {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .col-left-stacked {
+        flex-direction: row;
+        height: 300px;
+    }
+
+    .col-right-main {
+        height: auto;
+        /* Changed from 400px to auto */
+        width: 100%;
+    }
+
+    .col-right-main .gallery-item {
+        aspect-ratio: 4 / 3;
+        /* Ensure it matches the others or standard landscape */
+    }
+}
+
+@media (max-width: 768px) {
+
+    .block-b,
+    .block-c,
+    .block-d {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .block-d {
+        grid-template-rows: auto;
+    }
+
+    .col-left-stacked {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Mobile specific adjustments */
+    .col-right-main .gallery-item {
+        aspect-ratio: 4 / 3;
+    }
+
+    .block-b .gallery-item {
+        aspect-ratio: 16 / 9;
+    }
+
+    .gallery-item {
+        min-height: 0;
+        /* Remove min-height to let aspect-ratio rule */
+        width: 100%;
+        /* Force width to fit container */
+    }
+
+    /* FIX: Prevent gallery overflow causing horizontal scroll/shift */
+    .gallery-section {
+        padding: 30px 20px;
+        /* Reduced padding for mobile */
+        width: 100%;
+        overflow: hidden;
+        /* Cut off anything sticking out */
+        box-sizing: border-box;
+    }
+
+    .gallery-block,
+    .block-a,
+    .block-b,
+    .block-c,
+    .block-d {
+        width: 100% !important;
+        grid-template-columns: 1fr !important;
+        /* Force single column on everything */
+        display: grid !important;
+        margin-left: 0;
+        margin-right: 0;
+        gap: 15px;
+    }
+
+    .col-left-stacked,
+    .col-right-main {
+        width: 100% !important;
+        display: block !important;
+        /* Reset flex/grid complexity */
+    }
+
+    .col-left-stacked .gallery-item,
+    .col-right-main .gallery-item {
+        width: 100% !important;
+        margin-bottom: 15px;
+        /* Spacing between stacked items */
+        aspect-ratio: 4/3;
+        /* Consistent ratio */
+    }
+
+    .hero-price-tag {
+        font-size: 2.5rem;
+    }
+
+    .car-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-price-tag {
+        font-size: 2.5rem;
+    }
+
+    .car-title {
+        font-size: 2.5rem;
+    }
+
+    /* FIX: Force hero image centering on mobile */
+    .hero-visual {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero-image-container {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 40px 10px 10px 10px;
+        /* Added top padding for float animation */
+        display: flex;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .hero-car-img {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain;
+    }
+
+    /* NUCLEAR OPTION: Force all containers to respect viewport width */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative;
+    }
+
+    .car-detail-hero,
+    .gallery-section,
+    .hero-split-container,
+    .hero-visual,
+    .hero-data {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    /* FIX: Reducir márgenes laterales para títulos largos en móviles */
+    .hero-data {
+        padding: 0 8px !important;
+    }
+
+    .car-title {
+        word-break: break-word;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        font-size: 2.2rem;
+    }
+}
+
+/* --- Lightbox Styles --- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox.active {
+    display: flex;
+    /* Flex to center */
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox img {
+    max-width: 100%;
+    max-height: 90vh;
+    border-radius: 4px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    cursor: zoom-in;
+    transition: transform 0.1s ease-out;
+    /* Faster for mobile pinch */
+    transform-origin: center center;
+    touch-action: none;
+    /* Prevent scrolling while interacting */
+}
+
+.lightbox img.zoomed {
+    transform: scale(2.5);
+    cursor: zoom-out;
+    /* The JS handles transform-origin updates. Transition needs to be quick enough to feel responsive */
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2001;
+    transition: color 0.3s;
+}
+
+.lightbox-close:hover {
+    color: var(--gold-primary);
+    text-shadow: 0 0 10px var(--gold-primary);
+}
+
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 3rem;
+    cursor: pointer;
+    z-index: 2001;
+    padding: 20px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    color: var(--gold-primary);
+    text-shadow: 0 0 15px var(--gold-primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-prev {
+    left: 20px;
+}
+
+.lightbox-next {
+    right: 20px;
+}
+
+.lightbox-counter {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    color: var(--silver-accent);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    z-index: 2001;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+
+    .lightbox-prev,
+    .lightbox-next {
+        font-size: 2rem;
+        padding: 10px;
+    }
+
+    .lightbox-prev {
+        left: 10px;
+    }
+
+    .lightbox-next {
+        right: 10px;
+    }
+
+    .lightbox-close {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+    }
+
+    .lightbox-counter {
+        top: 25px;
+        left: 20px;
+        font-size: 1rem;
+    }
+}
+
+/* --- Search Modal --- */
+.search-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.search-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-modal-content {
+    width: 90%;
+    max-width: 600px;
+    border-radius: 24px;
+    padding: 30px;
+    position: relative;
+    transform: translateY(-30px);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(212, 175, 55, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.search-modal.active .search-modal-content {
+    transform: translateY(0);
+}
+
+.search-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: var(--silver-accent);
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    z-index: 10;
+}
+
+.search-close-btn:hover {
+    color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.1);
+    transform: rotate(90deg);
+}
+
+.search-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-icon-lg {
+    stroke: var(--gold-primary);
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: var(--font-main);
+    font-size: 1.3rem;
+    font-weight: 500;
+    outline: none;
+    letter-spacing: 1px;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-results {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Custom scrollbar for results */
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: var(--gold-primary);
+    border-radius: 3px;
+}
+
+.search-hint {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 30px 0;
+    font-style: italic;
+}
+
+.search-no-results {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 40px 0;
+}
+
+.search-no-results svg {
+    stroke: rgba(212, 175, 55, 0.4);
+    margin-bottom: 15px;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.search-result-item:hover {
+    background: rgba(212, 175, 55, 0.08);
+    border-color: rgba(212, 175, 55, 0.3);
+    transform: translateX(5px);
+}
+
+.search-result-img {
+    width: 80px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+}
+
+.search-result-info {
+    flex: 1;
+}
+
+.search-result-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search-result-specs {
+    display: flex;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--gold-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-result-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s;
+}
+
+.search-result-item:hover .search-result-arrow {
+    color: var(--gold-primary);
+    transform: translateX(5px);
+}
+
+/* Mobile Search Icon Styling */
+.mobile-search-btn {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.mobile-search-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.mobile-search-btn svg {
+    transition: stroke 0.3s;
+}
+
+.mobile-search-btn:hover svg {
+    stroke: var(--gold-primary);
+}
+
+/* Desktop search icon styling */
+.nav-links li:has(.search-icon) {
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    line-height: 0;
+    /* Prevent extra space from inline elements */
+}
+
+.search-icon:hover {
+    background: rgba(212, 175, 55, 0.15);
+}
+
+.search-icon svg {
+    transition: stroke 0.3s;
+    display: block;
+    /* Remove inline spacing */
+}
+
+.search-icon:hover svg {
+    stroke: var(--gold-primary);
+}
+
+/* Search Modal Mobile Responsiveness */
+@media (max-width: 768px) {
+    .search-modal {
+        padding-top: 80px;
+    }
+
+    .search-modal-content {
+        width: 95%;
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .search-header {
+        gap: 10px;
+    }
+
+    .search-icon-lg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .search-input {
+        font-size: 1.1rem;
+    }
+
+    .search-results {
+        max-height: 350px;
+    }
+
+    .search-result-item {
+        padding: 12px;
+    }
+
+    .search-result-img {
+        width: 60px;
+        height: 40px;
+    }
+
+    .search-result-title {
+        font-size: 0.9rem;
+    }
+
+    .search-result-specs {
+        font-size: 0.7rem;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}

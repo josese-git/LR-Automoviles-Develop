@@ -1,0 +1,29 @@
+[Unit]
+Description=JVeloce Telegram Bot
+Documentation=https://autosjveloce.com
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=Josese
+WorkingDirectory=/home/Josese/jveloce-bot
+ExecStart=/home/Josese/jveloce-bot/venv/bin/python bot.py
+Restart=always
+RestartSec=10
+
+# Variables de entorno desde el archivo .env
+EnvironmentFile=/home/Josese/jveloce-bot/.env
+
+# Seguridad básica
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/home/Josese/jveloce-bot
+
+# Logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=jveloce-bot
+
+[Install]
+WantedBy=multi-user.target

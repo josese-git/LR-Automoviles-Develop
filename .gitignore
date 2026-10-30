@@ -1,0 +1,13 @@
+node_modules/
+
+# Telegram Bot - Archivos sensibles y temporales
+telegram-bot/.env
+telegram-bot/firebase-service-account.json
+telegram-bot/__pycache__/
+telegram-bot/temp_images/
+
+# Monitor de Facebook Marketplace - Estado de anuncios procesados
+telegram-bot/fb_processed_listings.json
+
+# Playwright - Caché de navegadores
+telegram-bot/.playwright/

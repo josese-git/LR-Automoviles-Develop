@@ -1,0 +1,1252 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: block;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #050505;
+        }
+
+        /* Hamburger Button */
+        .hamburger-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(20, 20, 20, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 150;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            color: #888;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(30, 30, 30, 0.95);
+            color: #fff;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .hamburger-btn.active {
+            color: var(--gold-primary);
+        }
+
+        /* Sidebar Overlay */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 90;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: rgba(10, 10, 10, 0.98);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transform: translateX(-100%) !important;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .sidebar.open {
+            transform: translateX(0) !important;
+        }
+
+        .admin-logo {
+            width: 150px;
+            margin-bottom: 50px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80%;
+                max-width: 280px;
+            }
+
+            .hamburger-btn {
+                top: 15px;
+                left: 15px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .main-content {
+                padding: 15px;
+                padding-top: 70px;
+                padding-left: 15px;
+            }
+
+            /* Header responsive */
+            .main-content>div:first-child {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+
+            .main-content>div:first-child h1 {
+                font-size: 1.5rem !important;
+            }
+
+            .main-content>div:first-child>div {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .main-content>div:first-child .btn {
+                padding: 10px 15px;
+                font-size: 0.75rem;
+            }
+
+            /* Inventory list responsive */
+            .inventory-list {
+                grid-template-columns: 1fr !important;
+                gap: 15px;
+            }
+
+            /* Card responsive */
+            .admin-card {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .admin-card img {
+                width: 70px;
+                height: 45px;
+            }
+
+            .admin-card-info h4 {
+                font-size: 1rem;
+            }
+
+            /* Modal responsive - full screen on mobile */
+            .modal-content {
+                width: 100%;
+                max-width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .modal-header {
+                padding: 15px 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 1.1rem;
+            }
+
+            /* Modal body - single column on mobile */
+            .modal-body {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+                padding: 15px;
+            }
+
+            .form-section {
+                margin-bottom: 20px;
+            }
+
+            .section-title {
+                font-size: 0.8rem;
+            }
+
+            /* Form grid responsive */
+            .form-grid.two-col {
+                grid-template-columns: 1fr !important;
+            }
+
+            .form-input,
+            select,
+            textarea {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            /* Gallery slots responsive - 3 columns on mobile */
+            .gallery-slots {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px;
+            }
+
+            .slot-guide {
+                font-size: 0.6rem;
+            }
+
+            /* Interior gallery responsive */
+            .gallery-grid-interior {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* Drop zone responsive */
+            .drop-zone {
+                padding: 15px;
+            }
+
+            .drop-zone p {
+                font-size: 0.75rem;
+            }
+
+            .drop-zone-preview {
+                height: 120px;
+            }
+
+            /* Modal footer responsive */
+            .modal-footer {
+                padding: 15px;
+                flex-wrap: wrap;
+            }
+
+            .modal-footer .btn {
+                flex: 1;
+                min-width: 120px;
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+
+            /* Editor modal responsive */
+            #editorModal .modal-content {
+                width: 100%;
+                height: 100vh;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 400px) {
+            .gallery-slots {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            .main-content>div:first-child>div {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .main-content>div:first-child .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .menu-item {
+            color: #888;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            padding: 15px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .menu-item.active,
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            color: #ff4444;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px;
+            padding-top: 80px;
+            padding-left: 80px;
+            overflow-y: auto;
+            height: 100vh;
+            position: relative;
+        }
+
+        .inventory-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding-bottom: 100px;
+        }
+
+        /* Card Styling */
+        .admin-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .admin-card.dragging {
+            opacity: 0.5;
+            border: 2px dashed #555;
+        }
+
+        .admin-card.sortable {
+            cursor: grab;
+        }
+
+        .admin-card img {
+            width: 80px;
+            height: 50px;
+            object-fit: contain;
+            background: #000;
+            border-radius: 6px;
+        }
+
+        .admin-card-info {
+            flex: 1;
+        }
+
+        .admin-card-info h4 {
+            color: #fff;
+            margin: 0 0 5px 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .admin-card-info p {
+            color: #666;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            background: #222;
+            color: #888;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .status-badge.sold {
+            background: rgba(255, 50, 50, 0.2);
+            color: #ff5555;
+        }
+
+        /* Menu Button & Dropdown */
+        .menu-trigger {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            transition: 0.2s;
+            user-select: none;
+        }
+
+        .menu-trigger:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        .card-menu {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            width: 140px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: none;
+            /* Hidden by default */
+            z-index: 50;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .card-menu.visible {
+            display: flex;
+        }
+
+        .card-menu-item {
+            padding: 10px 15px;
+            color: #ccc;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .card-menu-item:hover {
+            background: #252525;
+            color: #fff;
+        }
+
+        .card-menu-item.delete {
+            color: #ff5555;
+        }
+
+        /* Advanced Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid #333;
+            width: 900px;
+            max-width: 95%;
+            height: 85vh;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: #fff;
+            font-family: 'Orbitron';
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 30px;
+            overflow-y: auto;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* Form Styling */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: var(--gold-primary);
+            font-family: 'Orbitron';
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .two-col {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group label {
+            display: block;
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .form-input,
+        select,
+        textarea {
+            width: 100%;
+            background: #080808;
+            border: 1px solid #333;
+            padding: 12px;
+            color: #fff;
+            border-radius: 6px;
+            font-family: 'Rajdhani';
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            border-color: var(--gold-primary);
+            outline: none;
+        }
+
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        /* Drag & Drop Zone */
+        .drop-zone {
+            border: 2px dashed #333;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+            background: #080808;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .drop-zone p {
+            color: #666;
+            font-size: 0.8rem;
+            margin: 10px 0 0 0;
+        }
+
+        .drop-zone-preview {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .drop-zone-preview.active {
+            display: block;
+        }
+
+        .drop-input {
+            display: none;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            transition: 0.2s;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: #666;
+            border: 1px solid #333;
+        }
+
+        .btn-cancel:hover {
+            border-color: #eee;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background: var(--gold-primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Gallery Slots */
+        .gallery-slots {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .gallery-slot {
+            aspect-ratio: 16/9;
+            border: 2px dashed #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            background: #080808;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .gallery-slot:hover {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .gallery-slot.has-image {
+            border-style: solid;
+            border-color: #444;
+        }
+
+        .gallery-slot.dragging {
+            opacity: 0.5;
+            border-color: var(--gold-primary);
+        }
+
+        .gallery-slot.drag-over {
+            border-color: var(--gold-primary);
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.02);
+        }
+
+        .slot-guide {
+            color: #555;
+            font-size: 0.7rem;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .slot-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .slot-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 50, 50, 0.9);
+            color: white;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .gallery-slot.has-image .slot-remove {
+            display: flex;
+        }
+
+        .gallery-slot.has-image .slot-guide {
+            display: none;
+        }
+
+        /* Interior Gallery Grid */
+        .gallery-grid-interior {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            min-height: 50px;
+        }
+
+        .interior-slot {
+            aspect-ratio: 16/9;
+            border: 1px solid #333;
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            cursor: grab;
+            transition: all 0.2s;
+        }
+
+        .interior-slot:hover {
+            border-color: var(--gold-primary);
+        }
+
+        .interior-slot.dragging {
+            opacity: 0.5;
+        }
+
+        .interior-slot.drag-over {
+            border-color: var(--gold-primary);
+            transform: scale(1.02);
+        }
+
+        .interior-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .interior-slot .slot-remove {
+            display: flex;
+        }
+
+        /* Slot Actions Container */
+        .slot-actions {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            display: none;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .gallery-slot.has-image .slot-actions {
+            display: flex;
+        }
+
+        .slot-edit {
+            width: 22px;
+            height: 22px;
+            background: rgba(212, 175, 55, 0.9);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .slot-edit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .gallery-slot .slot-remove,
+        .interior-slot .slot-remove {
+            width: 22px;
+            height: 22px;
+            background: rgba(255, 50, 50, 0.9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .slot-remove:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <script type="module">
+        import { auth, ADMIN_EMAIL, signOut, onAuthStateChanged } from './js/firebase-config.js';
+
+        // Make logout function available globally
+        window.firebaseLogout = async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        };
+
+        // Check authentication on page load
+        onAuthStateChanged(auth, (user) => {
+            if (!user || user.email !== ADMIN_EMAIL) {
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+
+    <!-- Hamburger Button -->
+    <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()">
+        <span id="hamburgerIcon">☰</span>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <img src="assets/logo sin fondo.png" alt="Admin" class="admin-logo">
+        <a href="#" class="menu-item active">➜ Inventario</a>
+        <a href="#" class="menu-item">➜ Estadísticas (WIP)</a>
+        <a href="#" class="menu-item">➜ Configuración</a>
+        <a href="#" onclick="firebaseLogout()" class="logout-btn menu-item">✕ Salir</a>
+    </div>
+
+    <script>
+        // Sidebar toggle functions
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            const icon = document.getElementById('hamburgerIcon');
+
+            const isOpen = sidebar.classList.toggle('open');
+            overlay.classList.toggle('visible', isOpen);
+            btn.classList.toggle('active', isOpen);
+            icon.textContent = isOpen ? '✕' : '☰';
+        }
+
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const btn = document.getElementById('hamburgerBtn');
+            const icon = document.getElementById('hamburgerIcon');
+
+            sidebar.classList.remove('open');
+            overlay.classList.remove('visible');
+            btn.classList.remove('active');
+            icon.textContent = '☰';
+        }
+
+        // Close sidebar when clicking on a menu item
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.sidebar .menu-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    closeSidebar();
+                });
+            });
+        });
+    </script>
+
+    <div class="main-content">
+        <div style="display:flex; justify-content:space-between; margin-bottom:30px;">
+            <h1 style="font-family:'Orbitron'; color:white;">Gestión de Inventario</h1>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-cancel" onclick="toggleSortMode()">⇵ Ordenar</button>
+                <button class="btn btn-primary" onclick="openModal()">+ Nuevo Vehículo</button>
+            </div>
+        </div>
+
+        <div id="inventory-list" class="inventory-list">
+            <!-- Cards rendered here by js/admin.js -->
+        </div>
+    </div>
+
+    <!-- Advanced Modal -->
+    <div class="modal" id="carModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nuevo Vehículo</h2>
+                <span style="color:#666; cursor:pointer; font-size:1.5rem;" onclick="closeModal()">×</span>
+            </div>
+
+            <form id="carForm" class="modal-body">
+                <input type="hidden" name="id" id="editCarId">
+
+                <!-- Left Column: Media -->
+                <div>
+                    <div class="form-section">
+                        <h4 class="section-title">MULTIMEDIA PRINCIPAL</h4>
+                        <div class="drop-zone" onclick="document.getElementById('mainImageInput').click()"
+                            id="mainDropZone">
+                            <img src="" class="drop-zone-preview" id="mainPreview">
+                            <i style="font-size:2rem; color:#444;">📷</i>
+                            <p>Arrastra imagen o click aquí</p>
+                            <input type="file" id="mainImageInput" class="drop-input" accept="image/*">
+                            <!-- Hidden input for URL fallback or base64 storage -->
+                            <input type="hidden" name="image" id="finalImageSrc">
+                        </div>
+                        <div style="margin-top:10px; display:flex; gap:10px;">
+                            <button type="button" class="btn btn-cancel" style="padding:5px 10px; font-size:0.8rem;"
+                                onclick="openEditorFromPreview('main')">✂ Editar</button>
+                            <input type="text" class="form-input" placeholder="O pega URL de imagen..."
+                                onchange="updatePreviewFromUrl(this.value, 'mainPreview', 'finalImageSrc')">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title">LOGO DE MARCA</h4>
+
+                        <!-- Custom Select/Search UI -->
+                        <div style="position: relative; margin-bottom: 15px;">
+                            <!-- Search Input -->
+                            <input type="text" id="brandSearchInput" class="form-input"
+                                placeholder="Buscar marca para logo (ej. Audi)..." autocomplete="off"
+                                onfocus="showBrandDropdown()" onblur="setTimeout(hideBrandDropdown, 200)"
+                                oninput="filterBrands()">
+
+                            <!-- Dropdown List -->
+                            <div id="brandDropdown"
+                                style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: #111; border: 1px solid #333; z-index: 50; max-height: 200px; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 5px;">
+                                <!-- List populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Preview Container -->
+                        <div
+                            style="background: #080808; border: 1px solid #333; border-radius: 6px; padding: 10px; display: flex; align-items: center; justify-content: center; min-height: 80px; margin-bottom: 10px;">
+                            <img src="" id="logoPreview" style="height:60px; display: none;" class="drop-zone-preview">
+                            <span id="logoPlaceholderText" style="color:#666; font-size:0.8rem;">Selecciona una marca
+                                para ver el logo</span>
+                        </div>
+
+                        <!-- Hidden Inputs -->
+                        <input type="hidden" name="logo" id="finalLogoSrc">
+
+                        <!-- Manual Override / Edit -->
+                        <div style="display:flex; gap:10px; margin-top: 5px;" class="drop-zone" id="logoDropZone"
+                            onclick="document.getElementById('logoInput').click()">
+                            <button type="button" class="btn btn-cancel" style="padding:5px 10px; font-size:0.8rem;"
+                                onclick="event.stopPropagation(); openEditorFromPreview('logo')">✂ Editar</button>
+                            <input type="text" class="form-input" style="cursor:pointer;"
+                                placeholder="O arrastra/pega Logo manual..." onclick="event.stopPropagation()"
+                                onchange="updatePreviewFromUrl(this.value, 'logoPreview', 'finalLogoSrc')">
+                            <input type="file" id="logoInput" class="drop-input" accept="image/*">
+                        </div>
+                        <div style="margin-top:10px; display:flex; gap:10px;">
+                            <div style="flex:1;">
+                                <label style="color:#888; font-size:0.8rem;">Tamaño Logo (%)</label>
+                                <input type="number" name="logoSize" class="form-input" value="100" min="50" max="300"
+                                    style="margin-top:5px;">
+                            </div>
+                            <div style="flex:1;">
+                                <label style="color:#888; font-size:0.8rem;">Margen Inf. (px)</label>
+                                <input type="number" name="logoMargin" class="form-input" placeholder="Auto"
+                                    style="margin-top:5px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title">GALERÍA EXTERIOR (5 fotos)</h4>
+                        <p style="color:#666; font-size:0.75rem; margin-bottom:10px;">Arrastra fotos a los slots o haz
+                            clic para seleccionar</p>
+                        <div id="exteriorGalleryGrid" class="gallery-slots">
+                            <div class="gallery-slot" data-index="0">
+                                <div class="slot-guide">📷 Frontal</div>
+                                <img class="slot-preview" src="" style="display:none;">
+                                <div class="slot-actions">
+                                    <div class="slot-edit" onclick="event.stopPropagation(); openExteriorEditor(0)">✂
+                                    </div>
+                                    <div class="slot-remove" onclick="event.stopPropagation(); removeExteriorImage(0)">×
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-slot" data-index="1">
+                                <div class="slot-guide">📷 3/4 Frontal</div>
+                                <img class="slot-preview" src="" style="display:none;">
+                                <div class="slot-actions">
+                                    <div class="slot-edit" onclick="event.stopPropagation(); openExteriorEditor(1)">✂
+                                    </div>
+                                    <div class="slot-remove" onclick="event.stopPropagation(); removeExteriorImage(1)">×
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-slot" data-index="2">
+                                <div class="slot-guide">📷 Lateral</div>
+                                <img class="slot-preview" src="" style="display:none;">
+                                <div class="slot-actions">
+                                    <div class="slot-edit" onclick="event.stopPropagation(); openExteriorEditor(2)">✂
+                                    </div>
+                                    <div class="slot-remove" onclick="event.stopPropagation(); removeExteriorImage(2)">×
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-slot" data-index="3">
+                                <div class="slot-guide">📷 3/4 Trasero</div>
+                                <img class="slot-preview" src="" style="display:none;">
+                                <div class="slot-actions">
+                                    <div class="slot-edit" onclick="event.stopPropagation(); openExteriorEditor(3)">✂
+                                    </div>
+                                    <div class="slot-remove" onclick="event.stopPropagation(); removeExteriorImage(3)">×
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-slot" data-index="4">
+                                <div class="slot-guide">📷 Trasero</div>
+                                <img class="slot-preview" src="" style="display:none;">
+                                <div class="slot-actions">
+                                    <div class="slot-edit" onclick="event.stopPropagation(); openExteriorEditor(4)">✂
+                                    </div>
+                                    <div class="slot-remove" onclick="event.stopPropagation(); removeExteriorImage(4)">×
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" id="exteriorImageInput" class="drop-input" accept="image/*"
+                            style="display:none;">
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title">GALERÍA INTERIOR (hasta 9 fotos)</h4>
+                        <p style="color:#666; font-size:0.75rem; margin-bottom:10px;">Puedes subir varias fotos a la vez
+                        </p>
+                        <div id="interiorGalleryGrid" class="gallery-grid-interior">
+                            <!-- Dynamic interior slots will be rendered here -->
+                        </div>
+                        <div class="drop-zone" onclick="document.getElementById('interiorImageInput').click()"
+                            id="interiorDropZone" style="margin-top:10px;">
+                            <i style="font-size:1.5rem; color:#444;">➕</i>
+                            <p>Añadir fotos interiores (máx. 9)</p>
+                            <input type="file" id="interiorImageInput" class="drop-input" accept="image/*" multiple>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details -->
+                <div>
+                    <div class="form-section">
+                        <h4 class="section-title">DATOS DEL VEHÍCULO</h4>
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label>Marca</label>
+                                <input type="text" name="brand" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Modelo</label>
+                                <input type="text" name="model" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label>Año</label>
+                                <input type="number" name="year" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Precio</label>
+                                <input type="text" name="price" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Kilometraje</label>
+                            <input type="text" name="km" class="form-input" placeholder="Ej: 120.000 km">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h4 class="section-title">ESPECIFICACIONES</h4>
+                        <div class="form-grid two-col">
+                            <div class="form-group">
+                                <label>Combustible</label>
+                                <select name="fuel" class="form-input">
+                                    <option value="Diesel">Diesel</option>
+                                    <option value="Gasolina">Gasolina</option>
+                                    <option value="Híbrido">Híbrido</option>
+                                    <option value="Eléctrico">Eléctrico</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Transmisión</label>
+                                <select name="transmission" class="form-input">
+                                    <option value="Auto">Automático</option>
+                                    <option value="Manual">Manual</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top:15px;">
+                            <label>Potencia (CV)</label>
+                            <input type="text" name="cv" class="form-input" placeholder="Ej: 150">
+                        </div>
+                    </div>
+
+                    <!-- Description & Status -->
+                    <div class="form-section">
+                        <h4 class="section-title">DETALLES</h4>
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea name="description" class="form-input"
+                                placeholder="Detalles, equipamiento, estado..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado</label>
+                            <select name="sold" class="form-input" style="border-color:#555;">
+                                <option value="false">En Venta</option>
+                                <option value="true" style="color:#ff5555;">Vendido</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cancel" onclick="closeModal()">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="submitCarForm()">Guardar Vehículo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Modal -->
+    <div class="modal" id="editorModal" style="z-index: 300;">
+        <div class="modal-content" style="width: 800px; height: 90vh;">
+            <div class="modal-header">
+                <h2>Editar Imagen</h2>
+                <span style="color:#666; cursor:pointer; font-size:1.5rem;" onclick="closeEditor()">×</span>
+            </div>
+            <div class="modal-body" style="display: flex; flex-direction: column; padding: 0; background: #000;">
+                <div style="flex: 1; overflow: hidden; position: relative;">
+                    <img id="editorImage" src="" style="max-width: 100%; display: block;">
+                </div>
+                <div
+                    style="padding: 20px; border-top: 1px solid #333; display: flex; gap: 20px; justify-content: center; background: #111;">
+                    <button type="button" class="btn btn-cancel" onclick="editorFlipX()">↔ Voltear</button>
+                    <!-- <button type="button" class="btn btn-cancel" onclick="editorRotate()">↻ Rotar</button> -->
+                    <button type="button" class="btn btn-primary" onclick="editorSave()">✓ Guardar Recorte</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
+    <script type="module">
+        import { CAR_BRANDS } from './js/car-brands.js';
+
+        // Brand Selector Logic
+        window.showBrandDropdown = function () {
+            document.getElementById('brandDropdown').style.display = 'block';
+            filterBrands(); // populate initially
+        };
+
+        window.hideBrandDropdown = function () {
+            document.getElementById('brandDropdown').style.display = 'none';
+        };
+
+        window.filterBrands = function () {
+            const input = document.getElementById('brandSearchInput').value.toLowerCase();
+            const dropdown = document.getElementById('brandDropdown');
+            dropdown.innerHTML = '';
+
+            const filtered = CAR_BRANDS.filter(file => {
+                const brand = file.split('.')[0].toLowerCase();
+                return brand.includes(input);
+            });
+
+            if (filtered.length === 0) {
+                dropdown.innerHTML = '<div style="padding: 10px; color: #666; font-size: 0.9rem;">No se encontraron marcas</div>';
+                return;
+            }
+
+            const FREQUENT_BRANDS = [
+                "seat", "volkswagen", "peugeot", "toyota", "renault", "kia", "hyundai",
+                "citroen", "dacia", "audi", "mercedes-benz", "bmw", "ford", "opel",
+                "nissan", "skoda", "fiat", "volvo", "mazda", "cupra", "honda", "land-rover", "porsche"
+            ];
+
+            const frequentFiles = [];
+            const otherFiles = [];
+
+            filtered.forEach(file => {
+                const brand = file.split('.')[0].toLowerCase();
+                if (FREQUENT_BRANDS.includes(brand)) {
+                    frequentFiles.push(file);
+                } else {
+                    otherFiles.push(file);
+                }
+            });
+
+            frequentFiles.sort();
+            otherFiles.sort();
+
+            const renderItem = (file) => {
+                const brandName = file.split('.')[0];
+                const div = document.createElement('div');
+                div.style.cssText = 'padding: 10px 15px; color: #ccc; cursor: pointer; border-bottom: 1px solid #222; font-family: "Rajdhani"; font-size: 1rem; transition: background 0.2s; display: flex; align-items: center; justify-content: space-between;';
+
+                const span = document.createElement('span');
+                span.textContent = brandName;
+                div.appendChild(span);
+
+                const img = document.createElement('img');
+                img.src = `https://raw.githubusercontent.com/josese-git/Jveloce-Develop/main/Coches/logos/${file}`;
+                img.style.cssText = 'height: 30px; max-width: 60px; object-fit: contain;';
+                div.appendChild(img);
+
+                div.onmouseover = () => div.style.background = '#252525';
+                div.onmouseout = () => div.style.background = 'transparent';
+                div.onmousedown = (e) => e.preventDefault(); // Prevents input blur before click
+                div.onclick = () => selectBrand(file, brandName);
+                return div;
+            };
+
+            if (frequentFiles.length > 0) {
+                const freqTitle = document.createElement('div');
+                freqTitle.style.cssText = 'padding: 5px 15px; background: #222; color: #eab308; font-family: "Rajdhani"; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;';
+                freqTitle.textContent = 'Frecuentes';
+                dropdown.appendChild(freqTitle);
+                frequentFiles.forEach(file => dropdown.appendChild(renderItem(file)));
+            }
+
+            if (otherFiles.length > 0) {
+                const alphaTitle = document.createElement('div');
+                alphaTitle.style.cssText = 'padding: 5px 15px; background: #222; color: #eab308; font-family: "Rajdhani"; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;';
+                alphaTitle.textContent = 'Alfabéticamente';
+                dropdown.appendChild(alphaTitle);
+                otherFiles.forEach(file => dropdown.appendChild(renderItem(file)));
+            }
+        };
+
+        window.selectBrand = function (file, brandName) {
+            document.getElementById('brandSearchInput').value = brandName;
+            hideBrandDropdown();
+
+            const logoUrl = `https://raw.githubusercontent.com/josese-git/Jveloce-Develop/main/Coches/logos/${file}`;
+            window.updatePreviewFromUrl(logoUrl, 'logoPreview', 'finalLogoSrc');
+
+            document.getElementById('logoPlaceholderText').style.display = 'none';
+            document.getElementById('logoPreview').style.display = 'block';
+        };
+    </script>
+    <script type="module" src="js/admin.js"></script>
+</body>
+
+</html>

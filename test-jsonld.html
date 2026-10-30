@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JSON-LD - Verificación Local</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+
+        h1 {
+            color: #d4af37;
+        }
+
+        .result {
+            background: #1a1a1a;
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        pre {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+
+        .success {
+            color: #4caf50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .button {
+            background: #d4af37;
+            color: #0a0a0a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            background: #f0c14b;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Test de JSON-LD - Verificación Local</h1>
+
+    <div class="result">
+        <h2>Instrucciones</h2>
+        <p>Este test verifica que el JSON-LD se está generando correctamente en tu sitio.</p>
+        <button class="button" onclick="testLocalPage()">🧪 Probar Página Local</button>
+        <button class="button" onclick="testProductionPage()">🌐 Probar Página en Producción</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script type="module">
+        window.testLocalPage = async function () {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="result"><h2>🔄 Probando página local...</h2></div>';
+
+            try {
+                // Simulate loading a car page
+                const testCar = {
+                    brand: "Mercedes",
+                    model: "Clase A 200d",
+                    year: "2019",
+                    image: "https://example.com/image.jpg",
+                    galleryExterior: ["img1.jpg", "img2.jpg", "img3.jpg"],
+                    galleryInterior: ["int1.jpg", "int2.jpg"],
+                    price: "25000",
+                    km: "50000 km",
+                    fuel: "Diésel",
+                    cv: "150",
+                    transmission: "Auto",
+                    description: "Mercedes Clase A en excelente estado"
+                };
+
+                // Generate JSON-LD like detalle.js does
+                const allImages = [];
+                if (testCar.image) allImages.push(testCar.image);
+                if (testCar.galleryExterior) {
+                    testCar.galleryExterior.filter(img => img).forEach(img => allImages.push(img));
+                }
+                if (testCar.galleryInterior) {
+                    testCar.galleryInterior.filter(img => img).forEach(img => allImages.push(img));
+                }
+
+                const structuredData = {
+                    "@context": "https://schema.org/",
+                    "@type": "Car",
+                    "name": `${testCar.brand} ${testCar.model} ${testCar.year || ''}`.trim(),
+                    "brand": {
+                        "@type": "Brand",
+                        "name": testCar.brand
+                    },
+                    "model": testCar.model,
+                    "vehicleModelDate": testCar.year ? testCar.year.toString() : undefined,
+                    "mileageFromOdometer": {
+                        "@type": "QuantitativeValue",
+                        "value": testCar.km ? testCar.km.replace(/[^\d]/g, '') : undefined,
+                        "unitCode": "KMT"
+                    },
+                    "fuelType": testCar.fuel,
+                    "vehicleTransmission": testCar.transmission === 'Auto' ? 'Automático' : testCar.transmission,
+                    "vehicleEngine": {
+                        "@type": "EngineSpecification",
+                        "enginePower": {
+                            "@type": "QuantitativeValue",
+                            "value": testCar.cv ? testCar.cv.replace(/[^\d]/g, '') : undefined,
+                            "unitCode": "BHP"
+                        }
+                    },
+                    "image": allImages.length > 0 ? allImages : undefined,
+                    "description": testCar.description || `${testCar.brand} ${testCar.model} ${testCar.year || ''} en excelente estado.`,
+                    "offers": {
+                        "@type": "Offer",
+                        "price": testCar.price ? testCar.price.toString().replace(/[€\s]/g, '') : undefined,
+                        "priceCurrency": "EUR",
+                        "availability": "https://schema.org/InStock",
+                        "seller": {
+                            "@type": "AutoDealer",
+                            "name": "Autos JVeloce",
+                            "telephone": "+34603945181",
+                            "url": "https://autosjveloce.com"
+                        }
+                    },
+                    "url": "https://autosjveloce.com/Coches/detalle.html?id=test"
+                };
+
+                // Remove undefined values
+                Object.keys(structuredData).forEach(key => {
+                    if (structuredData[key] === undefined) {
+                        delete structuredData[key];
+                    }
+                });
+
+                let html = '<div class="result">';
+                html += '<h2 class="success">✅ JSON-LD Generado Correctamente</h2>';
+                html += '<h3>Datos Generados:</h3>';
+                html += '<pre>' + JSON.stringify(structuredData, null, 2) + '</pre>';
+
+                html += '<h3>Validación:</h3>';
+                html += '<ul>';
+                html += '<li class="success">✓ Tipo: Car</li>';
+                html += '<li class="success">✓ Nombre: ' + structuredData.name + '</li>';
+                html += '<li class="success">✓ Marca: ' + structuredData.brand.name + '</li>';
+                html += '<li class="success">✓ Imágenes: ' + (structuredData.image ? structuredData.image.length : 0) + '</li>';
+                html += '<li class="success">✓ Precio: ' + structuredData.offers.price + ' EUR</li>';
+                html += '</ul>';
+
+                html += '<h3>📋 Siguiente Paso:</h3>';
+                html += '<p>Copia este JSON-LD y pégalo en <a href="https://search.google.com/test/rich-results" target="_blank" style="color: #d4af37;">Google Rich Results Test</a></p>';
+                html += '<p>Selecciona "CODE" en lugar de "URL" y pega el JSON-LD de arriba.</p>';
+
+                html += '</div>';
+                resultsDiv.innerHTML = html;
+
+            } catch (error) {
+                resultsDiv.innerHTML = '<div class="result"><h2 class="error">❌ Error: ' + error.message + '</h2></div>';
+            }
+        };
+
+        window.testProductionPage = async function () {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="result"><h2>🔄 Probando página en producción...</h2></div>';
+
+            let html = '<div class="result">';
+            html += '<h2>🌐 Test de Producción</h2>';
+            html += '<p>Para probar la página en producción:</p>';
+            html += '<ol>';
+            html += '<li>Abre: <a href="https://autosjveloce.com/Coches/detalle.html?id=mercedes-clase-a-200d-2019" target="_blank" style="color: #d4af37;">Mercedes Clase A en producción</a></li>';
+            html += '<li>Presiona F12 (DevTools)</li>';
+            html += '<li>En la consola, ejecuta:</li>';
+            html += '</ol>';
+            html += '<pre>// Ver el JSON-LD generado\nconsole.log(document.querySelector(\'script[type="application/ld+json"]\').textContent);\n\n// Ver el título\nconsole.log(document.title);</pre>';
+            html += '<p><strong>Resultado esperado:</strong></p>';
+            html += '<ul>';
+            html += '<li>Título: "Mercedes Clase A 200d 2019 | Autos JVeloce"</li>';
+            html += '<li>JSON-LD con tipo "Car" y array de imágenes</li>';
+            html += '</ul>';
+            html += '</div>';
+
+            resultsDiv.innerHTML = html;
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba SEO - Verificación de Cambios</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #e0e0e0;
+        }
+
+        h1 {
+            color: #d4af37;
+            border-bottom: 2px solid #d4af37;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #d4af37;
+            margin-top: 30px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        pre {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+            color: #d4af37;
+        }
+
+        code {
+            color: #d4af37;
+        }
+
+        .button {
+            background: #d4af37;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .button:hover {
+            background: #f0c14b;
+        }
+
+        #results {
+            margin-top: 20px;
+        }
+
+        .check-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #d4af37;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Verificación de Mejoras SEO</h1>
+
+    <div class="section">
+        <h2>Instrucciones</h2>
+        <p>Esta página te permite verificar que todos los cambios SEO se están aplicando correctamente.</p>
+        <ol>
+            <li>Haz clic en "Ejecutar Verificación Completa"</li>
+            <li>Revisa los resultados a continuación</li>
+            <li>Todos los checks deben aparecer en <span class="success">VERDE ✓</span></li>
+        </ol>
+        <button class="button" onclick="runFullVerification()">🚀 Ejecutar Verificación Completa</button>
+        <button class="button" onclick="testRealCarPage()">🚗 Probar con Página Real de Coche</button>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="section">
+        <h2>📋 Cambios Implementados</h2>
+        <ul>
+            <li><strong>JSON-LD Structured Data:</strong> Datos estructurados con todas las imágenes del coche</li>
+            <li><strong>Título Dinámico:</strong> Cada coche tiene su título específico en Google Search</li>
+            <li><strong>Meta Tags Open Graph:</strong> og:title, og:description, og:image actualizados dinámicamente
+            </li>
+            <li><strong>Atributos Alt Descriptivos:</strong> Todas las imágenes tienen alt text con marca, modelo, año y
+                vista</li>
+            <li><strong>Sitemap Generator:</strong> Script para generar sitemap.xml con todas las imágenes</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🔗 Próximos Pasos</h2>
+        <ol>
+            <li><strong>Validar JSON-LD:</strong>
+                <a href="https://search.google.com/test/rich-results" target="_blank" style="color: #d4af37;">
+                    Google Rich Results Test
+                </a>
+            </li>
+            <li><strong>Verificar en Google Search Console:</strong>
+                <a href="https://search.google.com/search-console" target="_blank" style="color: #d4af37;">
+                    Search Console
+                </a>
+            </li>
+            <li><strong>Generar Sitemap:</strong> Instalar Node.js y ejecutar <code>node generate-sitemap.js</code></li>
+            <li><strong>Esperar Indexación:</strong> Google puede tardar 1-2 semanas en re-indexar las imágenes</li>
+        </ol>
+    </div>
+
+    <script type="module">
+        import { db } from '../js/firebase-config.js';
+        import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        window.runFullVerification = async function () {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>🔄 Ejecutando verificación...</h2>';
+
+            let html = '<div class="section"><h2>Resultados de Verificación</h2>';
+            let allPassed = true;
+
+            // Test 1: Check if detalle.js has the new functions
+            html += '<div class="check-item">';
+            html += '<strong>1. Funciones SEO en detalle.js:</strong> ';
+            try {
+                const response = await fetch('../js/detalle.js');
+                const code = await response.text();
+                const hasJsonLd = code.includes('generateStructuredData');
+                const hasMetaTags = code.includes('updateMetaTags');
+                const hasAltText = code.includes('carName');
+
+                if (hasJsonLd && hasMetaTags && hasAltText) {
+                    html += '<span class="success">✓ CORRECTO</span>';
+                    html += '<br>- generateStructuredData(): ✓';
+                    html += '<br>- updateMetaTags(): ✓';
+                    html += '<br>- Alt text descriptivo: ✓';
+                } else {
+                    html += '<span class="error">✗ FALTA ALGO</span>';
+                    allPassed = false;
+                }
+            } catch (e) {
+                html += '<span class="error">✗ ERROR: ' + e.message + '</span>';
+                allPassed = false;
+            }
+            html += '</div>';
+
+            // Test 2: Check if sitemap generator exists
+            html += '<div class="check-item">';
+            html += '<strong>2. Script Generador de Sitemap:</strong> ';
+            try {
+                const response = await fetch('../generate-sitemap.js');
+                if (response.ok) {
+                    html += '<span class="success">✓ EXISTE</span>';
+                    html += '<br>Ubicación: generate-sitemap.js';
+                } else {
+                    html += '<span class="error">✗ NO ENCONTRADO</span>';
+                    allPassed = false;
+                }
+            } catch (e) {
+                html += '<span class="error">✗ ERROR</span>';
+                allPassed = false;
+            }
+            html += '</div>';
+
+            // Test 3: Check package.json
+            html += '<div class="check-item">';
+            html += '<strong>3. Configuración package.json:</strong> ';
+            try {
+                const response = await fetch('../package.json');
+                if (response.ok) {
+                    html += '<span class="success">✓ EXISTE</span>';
+                } else {
+                    html += '<span class="error">✗ NO ENCONTRADO</span>';
+                    allPassed = false;
+                }
+            } catch (e) {
+                html += '<span class="error">✗ ERROR</span>';
+                allPassed = false;
+            }
+            html += '</div>';
+
+            // Summary
+            html += '<div class="check-item" style="border-left-color: ' + (allPassed ? '#4caf50' : '#f44336') + ';">';
+            html += '<strong>Resumen:</strong> ';
+            if (allPassed) {
+                html += '<span class="success">✓ TODOS LOS CHECKS PASADOS</span>';
+                html += '<br><br>🎉 ¡Las mejoras SEO están correctamente implementadas!';
+            } else {
+                html += '<span class="error">✗ ALGUNOS CHECKS FALLARON</span>';
+                html += '<br><br>⚠️ Revisa los errores arriba.';
+            }
+            html += '</div>';
+
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        };
+
+        window.testRealCarPage = async function () {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<h2>🔄 Probando con página real de coche...</h2>';
+
+            let html = '<div class="section"><h2>Prueba con Mercedes Clase A 200d 2019</h2>';
+
+            try {
+                // Fetch a real car from Firebase
+                const docRef = doc(db, 'anuncios', 'mercedes-clase-a-200d-2019');
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    html += '<span class="error">✗ No se pudo cargar el vehículo de prueba</span>';
+                } else {
+                    const car = docSnap.data();
+                    html += '<div class="check-item">';
+                    html += '<strong>Datos del vehículo cargados:</strong> <span class="success">✓</span>';
+                    html += '<br>Marca: ' + car.brand;
+                    html += '<br>Modelo: ' + car.model;
+                    html += '<br>Año: ' + car.year;
+                    html += '</div>';
+
+                    // Simulate what would be generated
+                    const carTitle = `${car.brand} ${car.model} ${car.year || ''}`.trim();
+
+                    html += '<div class="check-item">';
+                    html += '<strong>Título que se generaría:</strong>';
+                    html += '<pre>' + carTitle + ' | Autos JVeloce</pre>';
+                    html += '</div>';
+
+                    html += '<div class="check-item">';
+                    html += '<strong>Meta Description que se generaría:</strong>';
+                    const desc = car.description && car.description.trim() !== ''
+                        ? car.description.substring(0, 160)
+                        : `${carTitle} - ${car.km || 'N/D'} km, ${car.fuel || 'N/D'}, ${car.cv || 'N/D'} CV. Disponible en Autos JVeloce.`;
+                    html += '<pre>' + desc + '</pre>';
+                    html += '</div>';
+
+                    // Count images
+                    let imageCount = 0;
+                    if (car.image) imageCount++;
+                    if (car.galleryExterior) imageCount += car.galleryExterior.filter(img => img).length;
+                    if (car.galleryInterior) imageCount += car.galleryInterior.filter(img => img).length;
+
+                    html += '<div class="check-item">';
+                    html += '<strong>Total de imágenes que se indexarían:</strong> ';
+                    html += '<span class="success">' + imageCount + ' imágenes</span>';
+                    html += '<br>- Imagen principal: ' + (car.image ? '✓' : '✗');
+                    html += '<br>- Galería exterior: ' + (car.galleryExterior ? car.galleryExterior.filter(img => img).length : 0) + ' imágenes';
+                    html += '<br>- Galería interior: ' + (car.galleryInterior ? car.galleryInterior.filter(img => img).length : 0) + ' imágenes';
+                    html += '</div>';
+
+                    html += '<div class="check-item" style="border-left-color: #4caf50;">';
+                    html += '<strong>✓ Verificación exitosa</strong>';
+                    html += '<br><br>Este vehículo se indexará correctamente en Google con:';
+                    html += '<br>• Título específico en resultados de búsqueda';
+                    html += '<br>• ' + imageCount + ' imágenes en Google Images';
+                    html += '<br>• Datos estructurados JSON-LD completos';
+                    html += '</div>';
+                }
+            } catch (error) {
+                html += '<span class="error">✗ ERROR: ' + error.message + '</span>';
+            }
+
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+﻿# Robots.txt para Autos JVeloce
+# https://lr-automoviles.web.app
+
+# Permitir acceso a todos los bots
+User-agent: *
+
+# Permitir rastreo de todo el sitio público
+Allow: /
+
+# Bloquear páginas administrativas y de login (no deben indexarse)
+Disallow: /admin.html
+Disallow: /login.html
+
+# Googlebot-Image: permitir acceso completo a imágenes y contenido
+User-agent: Googlebot-Image
+Allow: /
+
+# Referencia al Sitemap
+Sitemap: https://lr-automoviles.web.app/sitemap.xml
+

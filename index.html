@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LR Automóviles | Vehículos de Ocasión en Valencia</title>
+    <meta name="description"
+        content="LR Automóviles - Tu concesionario de vehículos de ocasión en Valencia. Gran selección de coches revisados y con la mejor garantía en Massanasa.">
+    <link rel="canonical" href="https://lr-automoviles.web.app/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
+    <!-- Open Graph / WhatsApp Meta Tags -->
+    <meta property="og:title" content="LR Automóviles">
+    <meta property="og:description"
+        content="Descubre nuestra selección de vehículos de ocasión en Valencia. Calidad y confianza en cada modelo.">
+    <meta property="og:image" content="https://lr-automoviles.web.app/assets/lr-logo.jpg">
+    <meta property="og:url" content="https://lr-automoviles.web.app/">
+    <meta property="og:type" content="website">
+
+    <!-- Local Business (AutoDealer) Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AutoDealer",
+      "name": "LR Automóviles",
+      "image": "https://lr-automoviles.web.app/assets/lr-logo.jpg",
+      "@id": "https://lr-automoviles.web.app/",
+      "url": "https://lr-automoviles.web.app/",
+      "telephone": "+34633518574",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "C/ Acequia del primer brazo N° 15",
+        "addressLocality": "Massanasa",
+        "postalCode": "46470",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 39.412611, 
+        "longitude": -0.394167
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "09:00",
+        "closes": "20:00"
+      },
+      "priceRange": "€€"
+    }
+    </script>
+
+    <!-- Fonts: Rajdhani and Orbitron for that futuristic/sporty look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Loading Spinner Styles -->
+    <style>
+        .inventory-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 100px 0;
+            width: 100%;
+        }
+
+        .spinner-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid rgba(212, 175, 55, 0.15);
+            border-top-color: #d4af37;
+            animation: spin 1s ease-in-out infinite;
+            box-shadow:
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 0 40px rgba(212, 175, 55, 0.1),
+                inset 0 0 15px rgba(212, 175, 55, 0.1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background & Effects -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <!-- Canvas created dynamically by background-animation.js -->
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <!-- Hamburger Menu for Mobile -->
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="logo-container">
+                <!-- Nav Logo: Full Logo -->
+                <img src="assets/lr-logo.jpg" alt="LR Automóviles Logo" class="nav-logo">
+            </div>
+
+            <!-- Mobile Search Icon (Absolute Right) -->
+            <div class="mobile-search-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E0E0E0" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Inicio</a></li>
+                <li><a href="#inventory">Coches</a></li>
+                <li><a href="resenas.html">Reseñas</a></li>
+                <li><a href="#contact">Contacto</a></li>
+                <li><a href="#" class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="search-modal">
+        <div class="search-modal-content glass-panel">
+            <button class="search-close-btn" id="searchCloseBtn" aria-label="Cerrar búsqueda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="search-header">
+                <svg class="search-icon-lg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar vehículo..."
+                    autocomplete="off">
+            </div>
+            <div id="searchResults" class="search-results">
+                <p class="search-hint">Escribe para buscar por marca, modelo, año...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <br>
+            <h1 class="hero-title">LR <span class="text-gold">AUTOMÓVILES</span></h1>
+            <p class="hero-subtitle">VEHÍCULOS DE OCASIÓN EN VALENCIA</p>
+        </div>
+        <div class="hero-3d-element">
+            <!-- 3D Floating Logo/Car Element: Silhouette -->
+            <div class="hero-description-box">
+                <p>En <span class="text-gold">LR Automóviles</span>, nos dedicamos a encontrar el vehículo perfecto para ti. Somos un concesionario especializado en vehículos de ocasión en Valencia, donde la <span class="text-gold">confianza</span>, la <span class="text-gold">calidad</span> y el <span class="text-gold">servicio</span> son nuestra prioridad. ¡Descubre por qué somos la opción de confianza en <em>Massanasa, Valencia</em> y encuentra el <strong>vehículo de tus sueños</strong> con <span class="text-gold">LR Automóviles</span>!</p>
+            </div>
+            <div class="energy-ring"></div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Inventory Grid -->
+    <section id="inventory" class="inventory-section">
+        <h2 class="section-title">NUESTROS <span class="text-stroke">VEHÍCULOS</span></h2>
+
+        <div class="car-grid" id="carGrid">
+            <!-- Loading Spinner -->
+            <div id="inventoryLoader" class="inventory-loader">
+                <div class="spinner-ring"></div>
+                <span class="loader-text">Cargando Vehículos...</span>
+            </div>
+            <!-- Dynamic Content Rendered by js/app.js -->
+        </div>
+
+        <!-- SEO Links for Googlebot -->
+        <div id="seo-links" style="display:none;">
+            <!-- SEO_LINKS_START -->
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=audi-a3-20-tdi-s-line-2007">Audi A3 2.0 TDI S-Line 2007</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=audi-q7-30-tdi-2006">Audi Q7 3.0 TDI 2006</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=bmw-serie-3-320d-cabrio-2005">BMW Serie 3 320d Cabrio 2005</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=citro%C3%ABn-c4-picasso-2016">Citroën C4 Picasso 2016</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=fiat-500-2011">Fiat 500 2011</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=fiat-dobl%C3%B2-2021">Fiat Doblò 2021</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=ford-2014-2014">Ford KA 2014</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=ford-focus-16-2012">Ford Focus 1.6 2012</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=ford-kuga-2-0-tdci-2009">Ford Kuga 2.0 TDCI 2009</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=hyundai-tucson-2021">HYUNDAI TUCSON 2021</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=kia-sportage-2020">Kia Sportage 2020</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=mercedes-clase-a-200d-2019">Mercedes Clase A 200d 2019</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=mercedes-gla-200-cdi-2015">Mercedes GLA 200 CDI 2015</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=mini-cooper-cabrio-2012">MINI Cooper Cabrio 2012</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=nissan-juke-2017">Nissan Juke 2017</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=nissan-qashqai2-2010">Nissan QASHQAI2 2010</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=nissan-qashqai2.-2010">Nissan QASHQAI2. 2010</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=nissan-terrano-2003">Nissan Terrano 2003</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=opel-insignia-2014">OPEL INSIGNIA 2014</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=opel-vivaro-2018">Opel Vivaro 2018</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=peugeot-2008-16-bluehdi-style-2017">Peugeot 2008 1.6 BlueHDi STYLE 2017</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=peugeot-3008-16-hdi-2014">Peugeot 3008 1.6 HDi 2014</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=peugeot-3008-1769360812025">Peugeot 3008 2016</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=peugeot-5008-2010">Peugeot 5008 2010</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=peugeot-expert-2017">Peugeot Expert 2017</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=prueba-prueba-1769368003006">Land Rover Discovery Sport 2016</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=seat-ibiza-1-6-tdi-2018">SEAT Ibiza 1.6 TDI 2018</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=seat-leon-19-tdi-2007">SEAT León 1.9 TDI 2007</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=seat-toledo-2018">Seat Toledo 2018</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=skoda-octavia-1769195641126">Skoda Octavia 2018</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=suzuki-vitara-16l-vvt-gle-2wd-5p-2017">Suzuki Vitara 1.6L VVT GLE 2WD 5p. 2017</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=toyota-auris-hybrid-2014">Toyota Auris Hybrid 2014</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=toyota-avensis-2-0-d-4d-2013">Toyota Avensis 2.0 D-4D 2013</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=toyota-yaris-1-4-d-4d-2012">Toyota Yaris 1.4 D-4D 2012</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=volkswagen-golf-gtd-2-0-tdi-2017">Volkswagen Golf GTD 2.0 TDI 2017</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=volkswagen-passat-variant-2015">Volkswagen Passat Variant 2015</a>
+            <a href="https://lr-automoviles.web.app/Coches/detalle.html?id=volkswagen-touareg-2005">Volkswagen TOUAREG 2005</a>
+        <!-- SEO_LINKS_END -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/lr-logo.jpg" alt="" role="presentation" class="contact-glow-img">
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61554233211583" class="social-btn glass-btn"
+                    aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.milanuncios.com/anuncios-usuario/julio-90742085.htm?stc=oth-share_link-send_friend-profile"
+                    class="social-btn glass-btn" aria-label="Milanuncios" target="_blank" rel="noopener noreferrer"
+                    title="Milanuncios">
+                    <img src="https://www.milanuncios.com/prensa//wp-content/uploads/2020/11/M-Icon-Round.png"
+                        alt="" role="presentation">
+                </a>
+
+                <a href="https://www.instagram.com/"  class="social-btn glass-btn"
+                    aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="" role="presentation">
+                </a>
+
+                <a href="https://wa.me/34633518574" class="social-btn glass-btn" aria-label="Whatsapp" target="_blank"
+                    rel="noopener noreferrer" title="WhatsApp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="" role="presentation">
+                </a>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="legal-links">
+                <a href="aviso-legal.html" class="legal-link">Aviso Legal</a> |
+                <a href="politica-privacidad.html" class="legal-link">Política de Privacidad</a>
+            </div>
+
+            <p class="copyright">© 2026 LR Automóviles. Vehículos de Ocasión.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/background-animation.js"></script> <!-- New Fancy Background -->
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/search.js"></script>
+    <script src="script.js"></script> <!-- Original script if needed -->
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[SW] Registered:', reg.scope))
+                    .catch(err => console.log('[SW] Registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
+

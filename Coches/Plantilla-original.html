@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes Clase A | Autos JVeloce</title>
+    <link rel="icon" type="image/png" href="../assets/icons/favicon.png">
+    <!-- Open Graph / WhatsApp Meta Tags -->
+    <meta property="og:title" content="Autos JVeloce | Detalle del Vehículo">
+    <meta property="og:description" content="Descubre los detalles de este vehículo exclusivo en Autos JVeloce.">
+    <meta property="og:image" content="https://autosjveloce.com/assets/logo%20con%20fondo.png">
+    <meta property="og:url" content="https://autosjveloce.com/">
+    <meta property="og:type" content="website">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+    <!-- Background & Effects -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <div class="hamburger" id="hamburgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="logo-container">
+                <a href="../index.html">
+                    <img src="../assets/logo sin fondo.png" alt="JVeloce Logo" class="nav-logo">
+                </a>
+            </div>
+
+            <div class="mobile-search-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E0E0E0" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="../index.html#home">Inicio</a></li>
+                <li><a href="../index.html#inventory">Coches</a></li>
+                <li><a href="../resenas.html">Reseñas</a></li>
+                <li><a href="../index.html#contact">Contacto</a></li>
+                <li><a href="#" class="search-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Split Screen) -->
+    <section class="car-detail-hero">
+        <div class="hero-split-container">
+            <!-- Left Column: Visual -->
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <img src="../assets/Mercedes clase A/MERCEDES 200D.png" alt="Mercedes Clase A" class="hero-car-img">
+                </div>
+                <div class="hero-price-tag">
+                    <span class="text-gold">€</span><span class="text-gold">25,999</span>
+                </div>
+            </div>
+
+            <!-- Right Column: Data -->
+            <div class="hero-data">
+                <h1 class="car-title">Mercedes<br><span class="text-gold">Clase A 200d</span></h1>
+                <div class="car-description">
+                    <p>Mercedes-Benz Clase A 200 d con motor diésel de alto rendimiento.
+                        <br>
+                        Matriculado en 2019 con 68.565 km certificados. Vehículo en excelente estado de conservación.
+                        Si buscas un compacto premium este es el suyo, deportivo, eficiente y con tecnología de
+                        vanguardia.
+                        <br>
+                        Puesto de conducción Widescreen con doble pantalla digital y sistema multimedia MBUX.
+                        Asientos deportivos con tapicería combinada en cuero ARTICO y tela. Consola central con Touchpad
+                        para una navegación intuitiva.
+
+                        Selector de modos DYNAMIC SELECT (Eco, Comfort y Sport) para adaptar la conducción. Diseño
+                        deportivo de 5 puertas con acabados de alta calidad.
+
+                        Todos nuestros vehículos se entregan revisados por nuestro taller de confianza y con todo el
+                        mantenimiento recién hecho.
+                    </p>
+                </div>
+
+                <!-- Car Specs Grid (New) -->
+                <div class="car-specs-grid">
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Kilometraje.png" alt="Kilometraje" class="spec-icon">
+                        <span>68.565 Km</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Combustible.png" alt="Combustible" class="spec-icon">
+                        <span>Diésel</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Cilindrada.png" alt="Potencia" class="spec-icon">
+                        <span>150 CV</span>
+                    </div>
+                    <div class="spec-item glass-panel">
+                        <img src="../assets/icons/Transmisión.png" alt="Transmisión" class="spec-icon">
+                        <span>Automático</span>
+                    </div>
+                </div>
+
+                <div class="cta-container">
+                    <p class="cta-text">
+                        Para más información <span class="text-gold">llamar al 603945181</span>.<br>
+                        Precio incluye cambio de nombre.<br>
+                        <span style="font-size: 0.8rem; opacity: 0.7;">El anuncio puede contener errores, no supone
+                            condiciones contractuales.</span>
+                    </p>
+                    <a href="tel:+34603945181" class="glass-btn action-btn">LLAMAR AHORA</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Asymmetric Grid) -->
+    <h1 class="car-title" style="text-align: center;">
+        <span class="text-gold">Galería</span>
+    </h1>
+
+    <!-- Block A: Presentación Exterior -->
+    <div class="gallery-block block-a">
+        <div class="col-left-stacked">
+            <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.28.jpeg"
+                    alt="Frontal"></div>
+            <div class="gallery-item"><img
+                    src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.28 (1).jpeg"
+                    alt="Frontal Lateral"></div>
+        </div>
+        <div class="col-right-main">
+            <div class="gallery-item main-img"><img
+                    src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.30.jpeg" alt="Perspectiva">
+            </div>
+        </div>
+    </div>
+
+    <!-- Block B: Perfiles Laterales -->
+    <div class="gallery-block block-b">
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.30 (1).jpeg"
+                alt="Lateral Izquierdo"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.31.jpeg"
+                alt="Lateral Derecho"></div>
+    </div>
+
+    <!-- Block C: Detalles Interiores - Cockpit -->
+    <div class="gallery-block block-c">
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.32.jpeg"
+                alt="Volante"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.34.jpeg"
+                alt="Cuadro Mandos">
+        </div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.33.jpeg"
+                alt="Salpicadero"></div>
+    </div>
+
+    <!-- Block D: Macro Detalles y Plazas Traseras -->
+    <div class="gallery-block block-d">
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.34.jpeg"
+                alt="Detalle 1"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.35.jpeg"
+                alt="Detalle 2"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.35 (1).jpeg"
+                alt="Detalle 3">
+        </div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.36.jpeg"
+                alt="Traseras"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.36 (1).jpeg"
+                alt="Textura"></div>
+        <div class="gallery-item"><img src="../assets/Mercedes clase A/WhatsApp Image 2025-12-11 at 13.14.37.jpeg"
+                alt="Extra"></div>
+
+
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="glass-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/icons/contacto-jveloce.png" alt="Contacto JVeloce" class="contact-glow-img">
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61554233211583" class="social-btn glass-btn"
+                    aria-label="Facebook" target="_blank" rel="noopener noreferrer" title="Facebook">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png"
+                        alt="Facebook">
+                </a>
+
+                <a href="https://www.milanuncios.com/anuncios-usuario/julio-90742085.htm?stc=oth-share_link-send_friend-profile"
+                    class="social-btn glass-btn" aria-label="Milanuncios" target="_blank" rel="noopener noreferrer"
+                    title="Milanuncios">
+                    <img src="https://www.milanuncios.com/prensa//wp-content/uploads/2020/11/M-Icon-Round.png"
+                        alt="Milanuncios">
+                </a>
+
+                <a href="https://www.instagram.com/jveloce_autos?igsh=MXJrYWhub3BpczhvMg==" class="social-btn glass-btn"
+                    aria-label="Instagram" target="_blank" rel="noopener noreferrer" title="Instagram">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+                </a>
+
+                <a href="https://wa.me/34622948792" class="social-btn glass-btn" aria-label="Whatsapp" target="_blank"
+                    rel="noopener noreferrer" title="WhatsApp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp">
+                </a>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="legal-links">
+                <a href="../aviso-legal.html" class="legal-link">Aviso Legal</a> |
+                <a href="../politica-privacidad.html" class="legal-link">Política de Privacidad</a>
+            </div>
+
+            <p class="copyright">© 2026 Autos JVeloce. Future Ready.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox Container -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <button class="lightbox-prev">&#10094;</button>
+        <button class="lightbox-next">&#10095;</button>
+        <span class="lightbox-counter">1 / 1</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Full Detail">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/background-animation.js"></script>
+    <script src="../js/lightbox.js"></script>
+    <script>
+        // Simple script for mobile menu toggle (copied logic from app.js roughly)
+        const hamburger = document.getElementById('hamburgerBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const body = document.body;
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('toggle');
+            navLinks.classList.toggle('active');
+            body.classList.toggle('menu-open');
+        });
+    </script>
+</body>
+
+</html>
