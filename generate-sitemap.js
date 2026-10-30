@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Update index.html with SEO links from Firebase
  * Run with: node generate-sitemap.js
  */

@@ -1,4 +1,4 @@
-﻿name: Deploy to Firebase Hosting & Functions on Merge
+name: Deploy to Firebase Hosting & Functions on Merge
 
 on:
   push:
