@@ -1,21 +1,23 @@
-{
-  "name": "functions",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "engines": {
-    "node": "20"
-  },
-  "dependencies": {
-    "express": "^4.22.1",
-    "firebase-admin": "^13.6.1",
-    "firebase-functions": "^7.0.5"
-  }
+﻿{
+    "name":  "functions",
+    "version":  "1.0.0",
+    "description":  "",
+    "main":  "index.js",
+    "scripts":  {
+                    "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1"
+                },
+    "keywords":  [
+
+                 ],
+    "author":  "",
+    "license":  "ISC",
+    "type":  "commonjs",
+    "engines":  {
+                    "node":  "22"
+                },
+    "dependencies":  {
+                         "express":  "^4.22.1",
+                         "firebase-admin":  "^13.6.1",
+                         "firebase-functions":  "^7.0.5"
+                     }
 }
