@@ -44,7 +44,7 @@ const getFeaturedGalleryImage = (carData) => {
     if (carData.galleryExterior && Array.isArray(carData.galleryExterior) && carData.galleryExterior[0]) {
         return carData.galleryExterior[0];
     }
-    return carData.image || 'https://lr-automoviles.web.app/assets/lr-logo.jpg';
+    return carData.image || 'https://lr-automoviles.web.app/assets/lr-logo.png';
 };
 
 // Escape HTML attribute characters to prevent broken HTML

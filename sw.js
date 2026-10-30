@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Service Worker - JVeloce Image Cache
  * Implementa estrategia "Cache First" para imágenes de Firebase Storage
  * y assets locales, reduciendo consumo de ancho de banda.
@@ -16,9 +16,9 @@ const IMAGE_PATTERNS = [
 
 // Assets estáticos a pre-cachear durante la instalación
 const STATIC_ASSETS = [
-    '/assets/lr-logo.jpg',
+    '/assets/lr-logo.png',
     '/assets/icons/favicon.png',
-    '/assets/lr-logo.jpg',
+    '/assets/lr-logo.png',
     '/assets/vendido.png'
 ];
 
