@@ -1,9 +1,10 @@
-﻿/**
+/**
  * Detalle.js - Dynamic Vehicle Detail Page
  * Loads vehicle data from Firebase based on URL parameter
  */
 
 import { db } from './firebase-config.js';
+import { INITIAL_CARS } from './initial-cars.js';
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const COLLECTION_NAME = 'anuncios';
@@ -29,28 +30,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
 
+        let car = null;
     try {
         // 2. Fetch vehicle data from Firebase
         const docRef = doc(db, COLLECTION_NAME, vehicleId);
         const docSnap = await getDoc(docRef);
 
-        if (!docSnap.exists()) {
-            showError('Vehículo no encontrado');
-            return;
+        if (docSnap.exists()) {
+            car = docSnap.data();
         }
-
-        const car = docSnap.data();
-
-        // 3. Inject data into HTML
-        populateVehicleData(car);
-
-        // Populate gallery with exterior and interior arrays separately, passing car data for alt text
-        populateGallery(car.galleryExterior || [], car.galleryInterior || [], car);
-
     } catch (error) {
-        console.error('Error loading vehicle:', error);
-        showError('Error al cargar el vehículo');
+        console.warn('Error fetching from Firebase, checking local cars:', error);
     }
+
+    if (!car) {
+        car = INITIAL_CARS.find(c => c.id === vehicleId);
+    }
+
+    if (!car) {
+        showError('Vehículo no encontrado');
+        return;
+    }
+
+    // 3. Inject data into HTML
+    populateVehicleData(car);
+
+    // Populate gallery with exterior and interior arrays separately, passing car data for alt text
+    populateGallery(car.galleryExterior || [], car.galleryInterior || [], car);
 });
 
 /**

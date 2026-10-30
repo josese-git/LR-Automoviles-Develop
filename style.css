@@ -6,9 +6,9 @@
 :root {
     /* Color Palette */
     --bg-deep-black: #050505;
-    --gold-primary: #D4AF37;
-    --gold-gradient: linear-gradient(135deg, #FGD700 0%, #D4AF37 50%, #B8860B 100%);
-    --gold-text-gradient: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    --gold-primary: #ff2a2a;
+    --gold-gradient: linear-gradient(135deg, #ff4d4d 0%, #e62129 50%, #b30006 100%);
+    --gold-text-gradient: linear-gradient(135deg, #ffffff 0%, #ff6b6b 22%, #ff2a2a 48%, #e62129 74%, #b30006 100%);
     --silver-accent: #E0E0E0;
     --red-neon: #FF3333;
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -17,7 +17,7 @@
 
     /* Effects */
     --blur-strength: 30px;
-    --glow-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+    --glow-shadow: 0 0 20px rgba(255, 42, 42, 0.15);
 
     /* Typography */
     --font-main: 'Rajdhani', sans-serif;
@@ -94,7 +94,7 @@ body {
 
 .nav-logo {
     height: 50px;
-    filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+    filter: drop-shadow(0 0 5px rgba(255, 42, 42, 0.5));
 }
 
 .nav-links {
@@ -124,7 +124,7 @@ body {
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--gold-primary);
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    text-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
 }
 
 /* --- Hero Section --- */
@@ -158,7 +158,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter: drop-shadow(0 0 20px rgba(184, 134, 11, 0.3));
+    filter: drop-shadow(0 0 20px rgba(179, 0, 6, 0.3));
 }
 
 .hero-subtitle {
@@ -188,9 +188,9 @@ body {
     margin: 0;
     /* Static glow - no animation on this element */
     text-shadow:
-        0 0 20px rgba(212, 175, 55, 0.4),
-        0 0 40px rgba(212, 175, 55, 0.25),
-        0 0 60px rgba(212, 175, 55, 0.15);
+        0 0 20px rgba(255, 42, 42, 0.4),
+        0 0 40px rgba(255, 42, 42, 0.25),
+        0 0 60px rgba(255, 42, 42, 0.15);
 }
 
 /* Pseudo-element for breathing glow - GPU accelerated via opacity */
@@ -205,7 +205,7 @@ body {
     left: -30px;
     right: -30px;
     bottom: -30px;
-    background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(255, 42, 42, 0.15) 0%, transparent 70%);
     border-radius: 50%;
     z-index: -1;
     animation: glow-breathe 4s ease-in-out infinite;
@@ -377,7 +377,7 @@ body {
     font-weight: 600;
 }
 
-/* Label / Rótulo Styling - Modern Glass Pill */
+/* Label / RÃ³tulo Styling - Modern Glass Pill */
 .card-details {
     position: relative;
     z-index: 2;
@@ -403,7 +403,7 @@ body {
     background: rgba(255, 255, 255, 0.15);
     border-color: var(--gold-primary);
     /* Gold border on hover */
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    box-shadow: 0 0 20px rgba(255, 42, 42, 0.2);
 }
 
 .car-model {
@@ -436,7 +436,7 @@ body {
 .sold-badge-img {
     width: 80%;
     transform: rotate(-10deg);
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+    filter: drop-shadow(0 0 15px rgba(255, 42, 42, 0.6));
     animation: pulse-gold 3s infinite ease-in-out;
 }
 
@@ -445,12 +445,12 @@ body {
     0%,
     100% {
         transform: rotate(-10deg) scale(1);
-        filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6));
+        filter: drop-shadow(0 0 15px rgba(255, 42, 42, 0.6));
     }
 
     50% {
         transform: rotate(-10deg) scale(1.05);
-        filter: drop-shadow(0 0 25px rgba(212, 175, 55, 1));
+        filter: drop-shadow(0 0 25px rgba(255, 42, 42, 1));
     }
 }
 
@@ -475,12 +475,12 @@ body {
 }
 
 .contact-glow-img {
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+    filter: drop-shadow(0 0 15px rgba(255, 42, 42, 0.4));
 }
 
 .contact-glow-img:hover {
     transform: scale(1.05);
-    filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.8));
+    filter: drop-shadow(0 0 30px rgba(255, 42, 42, 0.8));
 }
 
 .social-links {
@@ -518,8 +518,8 @@ body {
 }
 
 .social-btn:hover {
-    background: rgba(212, 175, 55, 0.2);
-    box-shadow: 0 0 25px rgba(212, 175, 55, 0.6), inset 0 0 10px rgba(212, 175, 55, 0.2);
+    background: rgba(255, 42, 42, 0.2);
+    box-shadow: 0 0 25px rgba(255, 42, 42, 0.6), inset 0 0 10px rgba(255, 42, 42, 0.2);
     transform: translateY(-8px) scale(1.1);
     border-color: var(--gold-primary);
 }
@@ -544,7 +544,7 @@ body {
 .legal-link:hover {
     color: var(--gold-primary);
     opacity: 1;
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    text-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
 }
 
 .copyright {
@@ -699,9 +699,9 @@ body {
     .nav-links a.active {
         color: var(--gold-primary);
         font-weight: 600;
-        text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
-        background: rgba(212, 175, 55, 0.1);
-        border: 1px solid rgba(212, 175, 55, 0.35);
+        text-shadow: 0 0 12px rgba(255, 42, 42, 0.6);
+        background: rgba(255, 42, 42, 0.1);
+        border: 1px solid rgba(255, 42, 42, 0.35);
     }
 
     /* Animated Glow for Inactive/Hover Links (White) */
@@ -777,8 +777,8 @@ body {
     /* Reduce costly text-shadow layers but keep visible glow */
     .hero-description-box p {
         text-shadow:
-            0 0 20px rgba(212, 175, 55, 0.5),
-            0 0 40px rgba(212, 175, 55, 0.2);
+            0 0 20px rgba(255, 42, 42, 0.5),
+            0 0 40px rgba(255, 42, 42, 0.2);
         /* 2 layers instead of 3, but more visible */
     }
 
@@ -792,7 +792,7 @@ body {
 
     /* Keep text-gold filter but lighter */
     .text-gold {
-        filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.25));
+        filter: drop-shadow(0 0 10px rgba(179, 0, 6, 0.25));
         /* Lighter shadow, still visible */
     }
 
@@ -922,13 +922,13 @@ html {
     0%,
     100% {
         transform: translateY(0);
-        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 5px rgba(212, 175, 55, 0));
+        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 5px rgba(255, 42, 42, 0));
         /* Faint glow */
     }
 
     50% {
         transform: translateY(-20px);
-        filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
+        filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 35px rgba(255, 42, 42, 0.5));
         /* Strong gold glow at peak */
     }
 }
@@ -946,14 +946,14 @@ html {
     font-size: 3.5rem;
     font-weight: 900;
     color: var(--gold-primary);
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    text-shadow: 0 0 20px rgba(255, 42, 42, 0.4);
     margin-top: 40px;
     /* Increased margin */
     background: rgba(255, 255, 255, 0.05);
     padding: 10px 40px;
     border-radius: 50px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(255, 42, 42, 0.3);
     z-index: 10;
 }
 
@@ -1053,7 +1053,7 @@ html {
     /* Smaller icon */
     height: 28px;
     stroke: var(--gold-primary);
-    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
+    filter: drop-shadow(0 0 8px rgba(255, 42, 42, 0.4));
 }
 
 .spec-item span {
@@ -1077,7 +1077,7 @@ html {
     text-decoration: none;
     color: white;
     border-radius: 50px;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(0, 0, 0, 0));
+    background: linear-gradient(135deg, rgba(255, 42, 42, 0.2), rgba(0, 0, 0, 0));
     border: 1px solid var(--gold-primary);
     transition: all 0.3s ease;
 }
@@ -1085,7 +1085,7 @@ html {
 .action-btn:hover {
     background: var(--gold-primary);
     color: black;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+    box-shadow: 0 0 30px rgba(255, 42, 42, 0.6);
 }
 
 /* Gallery Section */
@@ -1428,7 +1428,7 @@ html {
         margin-right: 0 !important;
     }
 
-    /* FIX: Reducir márgenes laterales para títulos largos en móviles */
+    /* FIX: Reducir mÃ¡rgenes laterales para tÃ­tulos largos en mÃ³viles */
     .hero-data {
         padding: 0 8px !important;
     }
@@ -1618,10 +1618,10 @@ html {
     transform: translateY(-30px);
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     background: rgba(20, 20, 20, 0.8);
-    border: 1px solid rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(255, 42, 42, 0.2);
     box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.6),
-        0 0 40px rgba(212, 175, 55, 0.1),
+        0 0 40px rgba(255, 42, 42, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
@@ -1645,7 +1645,7 @@ html {
 
 .search-close-btn:hover {
     color: var(--gold-primary);
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(255, 42, 42, 0.1);
     transform: rotate(90deg);
 }
 
@@ -1715,7 +1715,7 @@ html {
 }
 
 .search-no-results svg {
-    stroke: rgba(212, 175, 55, 0.4);
+    stroke: rgba(255, 42, 42, 0.4);
     margin-bottom: 15px;
 }
 
@@ -1733,8 +1733,8 @@ html {
 }
 
 .search-result-item:hover {
-    background: rgba(212, 175, 55, 0.08);
-    border-color: rgba(212, 175, 55, 0.3);
+    background: rgba(255, 42, 42, 0.08);
+    border-color: rgba(255, 42, 42, 0.3);
     transform: translateX(5px);
 }
 
@@ -1787,7 +1787,7 @@ html {
 }
 
 .mobile-search-btn:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(255, 42, 42, 0.1);
 }
 
 .mobile-search-btn svg {
@@ -1816,7 +1816,7 @@ html {
 }
 
 .search-icon:hover {
-    background: rgba(212, 175, 55, 0.15);
+    background: rgba(255, 42, 42, 0.15);
 }
 
 .search-icon svg {

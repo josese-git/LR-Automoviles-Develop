@@ -1,4 +1,4 @@
-﻿const { onRequest } = require('firebase-functions/v2/https');
+const { onRequest } = require('firebase-functions/v2/https');
 const admin = require('firebase-admin');
 const express = require('express');
 
@@ -44,7 +44,7 @@ const getFeaturedGalleryImage = (carData) => {
     if (carData.galleryExterior && Array.isArray(carData.galleryExterior) && carData.galleryExterior[0]) {
         return carData.galleryExterior[0];
     }
-    return carData.image || 'https://lr-automoviles.web.app/assets/logo%20con%20fondo.png';
+    return carData.image || 'https://lr-automoviles.web.app/assets/lr-logo.jpg';
 };
 
 // Escape HTML attribute characters to prevent broken HTML
