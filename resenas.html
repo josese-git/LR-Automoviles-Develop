@@ -484,7 +484,7 @@
             <p class="resenas-subtitle">Descubre lo que dicen nuestros clientes sobre su experiencia con LR Automóviles</p>
 
             <!-- Google Rating Badge -->
-            <a href="https://share.google/QLgMCOl6Wto87cDgW" target="_blank" rel="noopener noreferrer"
+            <a href="#" class="google-rating-badge" style="display: none;">
                 class="google-rating-badge">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
                     class="google-logo">
@@ -591,7 +591,7 @@
                 if (resenasValidas.length === 0) {
                     container.innerHTML = `
                         <div class="resenas-error">
-                            <p>No hay reseñas disponibles en este momento.</p>
+                            <p style="font-size: 1.15rem; color: #bbb; margin-top: 10px;">Próximamente publicaremos las reseñas y opiniones de nuestros clientes.</p>
                         </div>
                     `;
                     return;
@@ -722,6 +722,9 @@
 
         // Ejecutar cuando el DOM esté listo
         document.addEventListener('DOMContentLoaded', cargarResenas);
+    </script>
+    <script src="/js/cookies.js"></script>
+
     </script>
 
     <!-- Service Worker Registration -->
