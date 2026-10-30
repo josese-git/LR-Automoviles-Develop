@@ -77,7 +77,7 @@ const generateSeoGalleryHtml = (carData, carName) => {
                 <div class="gallery-item"><img src="${escapeHtmlAttr(exterior[1])}" alt="${safeCarName} - Vista 3/4 frontal"></div>
             </div>
             <div class="col-right-main">
-                <div class="gallery-item main-img"><img src="${escapeHtmlAttr(exterior[2])}" alt="${safeCarName} - Foto principal de la galería de segunda mano en Jaén"></div>
+                <div class="gallery-item main-img"><img src="${escapeHtmlAttr(exterior[2])}" alt="${safeCarName} - Foto principal de la galería de segunda mano en Valencia"></div>
             </div>
         </div>`;
     } else if (exterior.length > 0) {
@@ -174,7 +174,7 @@ const generateSeoJsonLd = (carData, carName, carId) => {
             }
         } : undefined,
         "image": imageList.length > 0 ? imageList : undefined,
-        "description": `${carName} de ocasión en Jaén. ${carData.fuel || ''} ${carData.km || ''} ${carData.cv ? carData.cv + ' CV' : ''}`.trim(),
+        "description": `${carName} de ocasión en Valencia. ${carData.fuel || ''} ${carData.km || ''} ${carData.cv ? carData.cv + ' CV' : ''}`.trim(),
         "offers": numericPrice ? {
             "@type": "Offer",
             "price": numericPrice,
@@ -184,13 +184,13 @@ const generateSeoJsonLd = (carData, carName, carId) => {
             "seller": {
                 "@type": "AutoDealer",
                 "name": "LR Automóviles",
-                "telephone": "+34603945181",
+                "telephone": "+34633518574",
                 "url": "https://lr-automoviles.web.app",
                 "address": {
                     "@type": "PostalAddress",
-                    "addressLocality": "Jaén",
-                    "addressRegion": "Andalucía",
-                    "postalCode": "23001",
+                    "addressLocality": "Massanasa",
+                    "addressRegion": "Valencia",
+                    "postalCode": "46470",
                     "addressCountry": "ES"
                 }
             }
@@ -235,13 +235,13 @@ app.get('/Coches/detalle.html', async (req, res) => {
             let description = `${priceStr}`;
             if (carData.fuel && carData.fuel !== 'N/D') description += ` | ${carData.fuel}`;
             if (carData.km && carData.km !== 'N/D') description += ` | ${carData.km}`;
-            description += ` - Descubre este increíble ${carName} en LR Automóviles Jaén.`;
+            description += ` - Descubre este increíble ${carName} en LR Automóviles Valencia.`;
 
             const rawHtml = `<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>${carName} | LR Automóviles Jaén</title>
+    <title>${carName} | LR Automóviles Valencia</title>
     <meta name="description" content="${description}">
     <!-- Open Graph (Facebook, WhatsApp) -->
     <meta property="og:title" content="${carName} | LR Automóviles">
@@ -314,7 +314,7 @@ app.get('/Coches/detalle.html', async (req, res) => {
                         let description = `${priceStr}`;
                         if (carData.fuel && carData.fuel !== 'N/D') description += ` | ${carData.fuel}`;
                         if (carData.km && carData.km !== 'N/D') description += ` | ${carData.km}`;
-                        description += ` - Descubre este increíble ${carName} en LR Automóviles Jaén.`;
+                        description += ` - Descubre este increíble ${carName} en LR Automóviles Valencia.`;
 
                         const mainCarImage = getFeaturedGalleryImage(carData);
                         const jsonLdString = generateSeoJsonLd(carData, carName, carId);
@@ -322,20 +322,20 @@ app.get('/Coches/detalle.html', async (req, res) => {
 
                         const injectedHeadTags = `
     <!-- SSR Injected SEO Tags & Structured Data for Google Indexing -->
-    <title>${carName} | LR Automóviles Jaén</title>
+    <title>${carName} | LR Automóviles Valencia</title>
     <link rel="canonical" id="canonical-url" href="https://lr-automoviles.web.app/Coches/detalle.html?id=${carId}">
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/icons/favicon.png">
     <link rel="apple-touch-icon" href="/assets/icons/favicon.png">
     <meta name="description" content="${description}">
-    <meta property="og:title" content="${carName} | LR Automóviles Jaén">
+    <meta property="og:title" content="${carName} | LR Automóviles Valencia">
     <meta property="og:description" content="${description}">
     <meta property="og:image" content="${mainCarImage}">
     <meta property="og:image:alt" content="${carName} - Foto principal de la galería">
     <meta property="og:url" content="https://lr-automoviles.web.app/Coches/detalle.html?id=${carId}">
     <meta property="og:type" content="article">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${carName} | LR Automóviles Jaén">
+    <meta name="twitter:title" content="${carName} | LR Automóviles Valencia">
     <meta name="twitter:description" content="${description}">
     <meta name="twitter:image" content="${mainCarImage}">
     <script type="application/ld+json">
@@ -449,14 +449,14 @@ app.get('/sitemap.xml', async (req, res) => {
             if (vehicle.galleryExterior && Array.isArray(vehicle.galleryExterior) && vehicle.galleryExterior[2]) {
                 xml += generateImageTag(
                     vehicle.galleryExterior[2],
-                    `${carName} - Foto principal de la galería de segunda mano en Jaén`,
-                    `${carName} ocasión Jaén`
+                    `${carName} - Foto principal de la galería de segunda mano en Valencia`,
+                    `${carName} ocasión Valencia`
                 );
             } else if (vehicle.image) {
                 xml += generateImageTag(
                     vehicle.image,
                     `${carName} - Imagen principal`,
-                    `${carName} ocasión Jaén`
+                    `${carName} ocasión Valencia`
                 );
             }
 
@@ -495,6 +495,6 @@ app.get('/sitemap.xml', async (req, res) => {
 });
 
 // Export the Express app as a Firebase Cloud Function (2nd Gen)
-exports.renderSocialTags = onRequest({ region: 'us-central1', maxInstances: 10 }, app);
+exports.renderSocialTags = onRequest({ region: 'us-central1', maxInstances: 10, cors: true, invoker: 'public' }, app);
 
 

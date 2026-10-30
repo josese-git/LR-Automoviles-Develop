@@ -33,15 +33,12 @@ class Store {
                     cars.push({ id: doc.id, ...doc.data() });
                 });
                 
-                if (cars.length > 0) {
+                // If Firestore has 3 or more cars, use Firestore data
+                if (cars.length >= 3) {
                     this.notifySubscribers(cars);
                 } else {
-                    // Show initial cars
+                    // Otherwise, always display the full set of 10 initial cars
                     this.notifySubscribers(DEFAULT_CARS);
-                    // Try seeding if Firestore is ready and not seeded
-                    if (!localStorage.getItem('seeded_lr_v1')) {
-                        this.seedDefaults();
-                    }
                 }
             }, (error) => {
                 console.warn("Firestore snapshot error (using initial cars):", error);
@@ -50,19 +47,6 @@ class Store {
         } catch (error) {
             console.warn("Firestore init error (using initial cars):", error);
             this.notifySubscribers(DEFAULT_CARS);
-        }
-    }
-
-    async seedDefaults() {
-        try {
-            console.log('Seeding initial 10 cars to Firestore...');
-            for (const car of DEFAULT_CARS) {
-                await this.addCar(car);
-            }
-            localStorage.setItem('seeded_lr_v1', 'true');
-            console.log('Initial cars seeded successfully.');
-        } catch (e) {
-            console.warn('Could not seed defaults to Firestore yet:', e);
         }
     }
 

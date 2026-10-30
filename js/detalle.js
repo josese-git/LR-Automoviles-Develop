@@ -144,7 +144,7 @@ function updateMetaTags(car) {
     let dynamicDesc = `${priceStr}`;
     if (car.fuel && car.fuel !== 'N/D') dynamicDesc += ` | ${car.fuel}`;
     if (car.km && car.km !== 'N/D') dynamicDesc += ` | ${car.km}`;
-    dynamicDesc += ` - Descubre este increíble ${carTitle} en LR Automóviles Jaén.`;
+    dynamicDesc += ` - Descubre este increíble ${carTitle} en LR Automóviles Valencia.`;
 
     const carDescription = dynamicDesc;
 
@@ -237,13 +237,13 @@ function generateStructuredData(car) {
             "seller": {
                 "@type": "AutoDealer",
                 "name": "LR Automóviles",
-                "telephone": "+34603945181",
+                "telephone": "+34633518574",
                 "url": "https://lr-automoviles.web.app",
                 "address": {
                     "@type": "PostalAddress",
-                    "addressLocality": "Jaén",
-                    "addressRegion": "Andalucía",
-                    "postalCode": "23001",
+                    "addressLocality": "Massanasa",
+                    "addressRegion": "Valencia",
+                    "postalCode": "46470",
                     "addressCountry": "ES"
                 }
             }
@@ -322,7 +322,7 @@ function populateGallery(exteriorImages, interiorImages, car) {
                 <div class="gallery-item"><img src="${exterior[1]}" alt="${carName} - Vista 3/4 frontal"></div>
             </div>
             <div class="col-right-main">
-                <div class="gallery-item main-img"><img src="${exterior[2]}" alt="${carName} - Foto principal de la galería de segunda mano en Jaén"></div>
+                <div class="gallery-item main-img"><img src="${exterior[2]}" alt="${carName} - Foto principal de la galería de segunda mano en Valencia"></div>
             </div>
         `;
         container.appendChild(blockA);

@@ -279,7 +279,8 @@ body {
 
 .car-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 380px));
+    justify-content: center;
     gap: 40px;
 }
 
@@ -293,6 +294,9 @@ body {
     /* Allow image to pop out if needed */
     transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     height: 450px;
+    max-width: 380px;
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
