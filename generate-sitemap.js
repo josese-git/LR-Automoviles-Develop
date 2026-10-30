@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Update index.html with SEO links from Firebase
  * Run with: node generate-sitemap.js
  */
@@ -8,23 +8,23 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { readFileSync, writeFileSync } from 'fs';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAKr2_t_-JjzeiO8G8vQUkitqgDXi49ih0",
-    authDomain: "jveloce-cf602.firebaseapp.com",
-    projectId: "jveloce-cf602",
-    storageBucket: "jveloce-cf602.firebasestorage.app",
-    messagingSenderId: "779415799900",
-    appId: "1:779415799900:web:759f5e87559312550dfe99",
-    measurementId: "G-YSCZ95T9LY"
+    apiKey: "AIzaSyBPbGmUp7pLvzosaW3ZN-XbogoR8HBXuZM",
+    authDomain: "lrautomoviles.firebaseapp.com",
+    projectId: "lrautomoviles",
+    storageBucket: "lrautomoviles.firebasestorage.app",
+    messagingSenderId: "391387461527",
+    appId: "1:391387461527:web:82cd1a59b9de6a85f436d2",
+    measurementId: "G-VZCCHNYVZ2"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const BASE_URL = 'https://autosjveloce.com';
+const BASE_URL = 'https://lrautomoviles.web.app';
 const COLLECTION_NAME = 'anuncios';
 
 async function updateSeoLinks() {
-    console.log('🔄 Obteniendo vehículos para enlaces SEO...');
+    console.log('🔍 Obteniendo vehículos para enlaces SEO...');
 
     try {
         // Fetch all vehicles from Firebase
@@ -42,7 +42,7 @@ async function updateSeoLinks() {
         console.log(`✅ Encontrados ${vehicles.length} vehículos`);
 
         // Inject static links into index.html for SEO
-        console.log('🔄 Inyectando enlaces estáticos en index.html...');
+        console.log('🔍 Inyectando enlaces estáticos en index.html...');
         
         const indexPath = 'index.html';
         let indexHtml = readFileSync(indexPath, 'utf8');
